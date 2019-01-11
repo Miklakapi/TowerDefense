@@ -29,3 +29,8 @@
 # Executables
 *.out
 *.app
+
+*.pdb
+*.tlog
+*.ipch
+*.db
