@@ -2,15 +2,20 @@
 #include <SFML\System.hpp>
 #include <SFML\Graphics.hpp>
 #include <iostream>
+#include <time.h>
 
 using namespace std;
 using namespace sf;
 
 int main() {
-	
-	RenderWindow app{ VideoMode{1920,1080,},"TowerDefense",Style::Fullscreen };
-		app.setFramerateLimit(144);
-
+	int x = 60;
+	RenderWindow app{ VideoMode{1280,720},"TowerDefense",Style::Close };
+		app.setFramerateLimit(x);
+		RectangleShape shape;
+		Texture  texture;
+		texture.loadFromFile("Grass.png");
+		shape.setTexture(&texture);
+		shape.setSize(Vector2f(40, 40));
 	while (app.isOpen()) {
 
 		Event event;
@@ -23,7 +28,12 @@ int main() {
 		}
 
 		app.clear();
-			//app.draw();
+		for (int x = 0; x < 32; x++) {
+			for (int y = 0; y < 18; y++) {
+				shape.setPosition(Vector2f(x * 40, y * 40));
+				app.draw(shape);
+			}
+		}
 		app.display();
 	}
 	return 0;
