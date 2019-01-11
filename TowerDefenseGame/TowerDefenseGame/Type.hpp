@@ -29,8 +29,9 @@ namespace Type {
 		Settings,
 		Credits,
 		Exit,
-		Undo,
 		FPS,
+		Volume,
+		Undo,
 		Miss
 	};
 }
