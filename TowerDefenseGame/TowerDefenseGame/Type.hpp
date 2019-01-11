@@ -1,7 +1,9 @@
+#pragma once
+
 namespace Type {
 	
 	enum Mob {
-
+		one
 	};
 
 	enum Content {
@@ -12,7 +14,7 @@ namespace Type {
 	};
 
 	enum Weapon {
-
+		two
 	};
 
 	enum Direct {
@@ -20,5 +22,15 @@ namespace Type {
 		Top,
 		Right,
 		Down
+	};
+
+	enum Options {
+		Start,
+		Settings,
+		Credits,
+		Exit,
+		Undo,
+		FPS,
+		Miss
 	};
 }
