@@ -38,3 +38,6 @@
 *.idb
 *.sln
 *.suo
+*.user
+*.filters
+*.log
