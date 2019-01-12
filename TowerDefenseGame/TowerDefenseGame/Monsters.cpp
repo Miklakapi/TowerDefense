@@ -21,6 +21,10 @@ void Monsters::setMob(Type::Mob mob) {
 	setTextureRect(*(rect + mob));
 }
 
+Type::Mob Monsters::getMob() {
+	return mob;
+}
+
 void Monsters::dmg(int damage) {
 	health -= damage;
 	if (health <= 0) live = false;
@@ -31,6 +35,7 @@ bool Monsters::isLive() {
 }
 
 void Monsters::reset() {
-	setMob(Type::Mob::Empty);
-	
+	setMob(mob);
+	live = true;
+	health = copyHealth;
 }
