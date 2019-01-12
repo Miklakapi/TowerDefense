@@ -10,9 +10,14 @@ namespace Type {
 
 	enum Content {
 		Grass,
-		Road,
 		Bush,
-		Rock
+		Rock,
+		RoadNS,
+		RoadEW,
+		RoadNE,
+		RoadES,
+		RoadSW,
+		RoadWN
 	};
 
 	enum Weapon {
