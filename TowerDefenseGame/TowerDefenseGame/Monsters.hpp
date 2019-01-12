@@ -15,15 +15,18 @@ private:
 
 	IntRect* rect;
 
+	queue <Type::Direct> direct;
+
 	Type::Mob mob;
 
 	bool live;
 
+	int copyHealth;
 	int health;
 
 	float speed;
 
-	queue <Type::Direct> direct;
+	
 
 public:	
 
@@ -32,6 +35,8 @@ public:
 	void setQueue(queue <Type::Direct> direct);
 
 	void setMob(Type::Mob);
+
+	Type::Mob getMob();
 
 	void dmg(int damage);
 
