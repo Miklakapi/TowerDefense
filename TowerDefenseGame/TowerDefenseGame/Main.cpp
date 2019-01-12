@@ -4,6 +4,7 @@
 #include <SFML\Graphics.hpp>
 #include "Type.hpp"
 #include "TowerDefense.hpp"
+#include <iostream>
 
 using namespace sf;
 
@@ -23,6 +24,21 @@ int main() {
 		optionsMenu.loadFromFile("Img/MenuOptions.png");
 	Texture creditsMenu;
 		creditsMenu.loadFromFile("Img/MenuCredits.png");
+	//
+	Texture grass;
+		grass.loadFromFile("img/Grass.png");
+	Texture bush;
+		bush.loadFromFile("img/Bush.png");
+	Texture rock;
+		rock.loadFromFile("img/Rock.png");
+
+	Texture roadT[6];	Texture* road = roadT;
+		(road + 0)->loadFromFile("img/RoadNS.png");
+		(road + 1)->loadFromFile("img/RoadEW.png");
+		(road + 2)->loadFromFile("img/RoadNE.png");
+		(road + 3)->loadFromFile("img/RoadES.png");
+		(road + 4)->loadFromFile("img/RoadSW.png");
+		(road + 5)->loadFromFile("img/RoadWN.png");
 
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
