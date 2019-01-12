@@ -3,18 +3,21 @@
 namespace Type {
 	
 	enum Mob {
-		one
+		Empty,
+		mob1,
+		mob2
 	};
 
 	enum Content {
-		Road,
 		Grass,
+		Road,
 		Bush,
 		Rock
 	};
 
 	enum Weapon {
-		two
+		tower1,
+		tower2
 	};
 
 	enum Direct {
