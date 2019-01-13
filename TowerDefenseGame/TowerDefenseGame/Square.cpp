@@ -7,7 +7,9 @@
 
 using namespace sf;
 
-Square::Square() : RectangleShape() {};
+IntRect* Square::rect = NULL;
+
+Square::Square() : RectangleShape() {}
 
 void Square::loadIntRect(IntRect* rect) {
 	this->rect = rect;
