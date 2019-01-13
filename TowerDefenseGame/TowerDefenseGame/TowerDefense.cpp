@@ -4,16 +4,14 @@
 #include <SFML\Graphics.hpp>
 #include "Menu.hpp"
 #include "Type.hpp"
+#include "Map.hpp"
 #include "TowerDefense.hpp"
 
-TowerDefense::TowerDefense() {
+TowerDefense::TowerDefense(RenderWindow* window) : map(window) {
+	this->window = window;
 	music = true;
 	round = 1;
 	game = false;
-}
-
-void TowerDefense::setWindow(RenderWindow* window) {
-	this->window = window;
 }
 
 void TowerDefense::setSound(Sound* sound) {
@@ -136,6 +134,9 @@ void TowerDefense::click(Vector2i mousePosition, Mouse::Button button) {
 
 void TowerDefense::drawAll() {
 	if (menu.open)window->draw(menu);
-	if (options.open)window->draw(options);
-	if (credits.open)window->draw(credits);
+	else if (options.open)window->draw(options);
+	else if (credits.open)window->draw(credits);
+	else if (game) {
+		map.drawAll();
+	}
 }
