@@ -3,7 +3,6 @@
 #include <SFML\Window.hpp>
 #include <SFML\System.hpp>
 #include <SFML\Graphics.hpp>
-#include <queue>
 #include "Type.hpp"
 
 using namespace sf;
@@ -13,9 +12,15 @@ class Monsters :public RectangleShape{
 
 private:
 
-	IntRect* rect;
+	Clock clock;
 
-	queue <Type::Direct> direct;
+	static IntRect* monsterRect;
+
+	static Type::Direct* direct;
+	Type::Direct actualDirect;
+	int moveNumber;
+	int aMove;
+	int miniMove;
 
 	Type::Mob mob;
 
@@ -24,24 +29,30 @@ private:
 	int copyHealth;
 	int health;
 
-	float speed;
-
-	
+	int speed;	
 
 public:	
 
 	void loadIntRect(IntRect* rect);
 
-	void setQueue(queue <Type::Direct> direct);
+	void setRoad(Type::Direct* direct);
 
 	void setMob(Type::Mob);
 
 	Type::Mob getMob();
+
+	void setHealth(int helath);
+
+	void setSpeed(int speed);
+
+	void setMoveNumber(int moveNumber);
 
 	void dmg(int damage);
 
 	bool isLive();
 
 	void reset();
+
+	int moveMonster();
 
 };
