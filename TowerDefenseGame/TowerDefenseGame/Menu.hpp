@@ -44,7 +44,7 @@ public:
 
 	void loadSound(Sound* clickSound);
 
-	virtual Type::Options click(Vector2i mousePosition);
+	virtual Type::Options click(Vector2i mousePosition, bool playSound);
 
 };
 
@@ -57,7 +57,7 @@ public:
 
 	Menu();
 
-	Type::Options click(Vector2i mousePosition);
+	Type::Options click(Vector2i mousePosition, bool playSound);
 
 };
 
@@ -65,12 +65,14 @@ public:
 /////////////////////////////////////////////////////////////////////////////////////
 
 class Options :public MenuPlan {
-	
+
 public:
+
+	int settings;
 
 	Options();
 
-	Type::Options click(Vector2i mousePosition);
+	Type::Options click(Vector2i mousePosition, bool playSound);
 
 };
 
@@ -83,6 +85,6 @@ public:
 
 	Credits();
 
-	Type::Options click(Vector2i mousePosition);
+	Type::Options click(Vector2i mousePosition, bool playSound);
 
 };
