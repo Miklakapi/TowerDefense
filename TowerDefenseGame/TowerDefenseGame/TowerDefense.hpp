@@ -15,6 +15,12 @@ class TowerDefense {
 
 	bool game;
 
+	bool music;
+
+	int round;
+
+	Texture* textureOptions;
+
 	//
 
 	void playSound();
@@ -29,9 +35,13 @@ public:
 
 	//
 
+	TowerDefense();
+
 	void setWindow(RenderWindow* window);
 
 	void setSound(Sound* sound);
+
+	void setOptionsTexture(Texture* texture);
 
 	void click(Vector2i mousePosition, Mouse::Button button);
 
