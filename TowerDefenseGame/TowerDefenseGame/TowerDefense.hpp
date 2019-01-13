@@ -6,6 +6,7 @@
 #include "Menu.hpp"
 #include "Type.hpp"
 #include "Map.hpp"
+#include "Monsters.hpp"
 
 class TowerDefense {
 
@@ -37,7 +38,7 @@ public:
 
 	Map map;
 
-
+	Monsters fireDude;
 
 	//
 
@@ -47,7 +48,7 @@ public:
 
 	void setOptionsTexture(Texture* texture);
 
-	
+	void run();
 
 	void click(Vector2i mousePosition, Mouse::Button button);
 
