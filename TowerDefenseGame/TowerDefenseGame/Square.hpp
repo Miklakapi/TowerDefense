@@ -9,11 +9,13 @@ using namespace sf;
 
 class Square :public RectangleShape{
 
-	IntRect* rect;
+	
 
 	Type::Content content;
 
 public:
+
+	static IntRect* rect;
 
 	Square();
 
