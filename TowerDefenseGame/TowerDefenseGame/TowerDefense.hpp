@@ -5,7 +5,7 @@
 #include <SFML\Graphics.hpp>
 #include "Menu.hpp"
 #include "Type.hpp"
-#include "Square.hpp"
+#include "Map.hpp"
 
 class TowerDefense {
 
@@ -21,6 +21,8 @@ class TowerDefense {
 
 	Texture* textureOptions;
 
+	IntRect* mapRect;
+
 	//
 
 	void playSound();
@@ -33,15 +35,19 @@ public:
 
 	Credits credits;
 
+	Map map;
+
+
+
 	//
 
-	TowerDefense();
-
-	void setWindow(RenderWindow* window);
+	TowerDefense(RenderWindow* window);
 
 	void setSound(Sound* sound);
 
 	void setOptionsTexture(Texture* texture);
+
+	
 
 	void click(Vector2i mousePosition, Mouse::Button button);
 
