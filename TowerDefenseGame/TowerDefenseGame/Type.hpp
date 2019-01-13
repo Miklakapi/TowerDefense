@@ -24,10 +24,18 @@ namespace Type {
 	};
 
 	enum Direct {
-		Left,
-		Top,
 		Right,
-		Down
+		Bottom,
+		Top,
+		Left,
+		EN,
+		NE,
+		ES,
+		SE,
+		SW,
+		WS,
+		NW,
+		WN
 	};
 
 	enum Options {
