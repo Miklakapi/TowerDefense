@@ -42,3 +42,7 @@ void Map::setContent(Type::Content content) {
 		(square + i)->setContent(content);
 	}
 }
+
+void Map::setContent(int nr, Type::Content content) {
+	(square + nr)->setContent(content);
+}
