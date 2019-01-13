@@ -26,4 +26,6 @@ public:
 
 	void setContent(Type::Content content);
 
+	void setContent(int nr, Type::Content content);
+
 };
