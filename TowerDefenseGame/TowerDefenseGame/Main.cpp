@@ -17,7 +17,7 @@ int main() {
 
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
-
+							//Textures
 	Texture mainMenu;
 		mainMenu.loadFromFile("Img/MenuMain.png");
 	Texture optionsMenu[4];
@@ -34,16 +34,23 @@ int main() {
 		lv2.loadFromFile("Img/lv2.png");
 	Texture lv3;
 		lv3.loadFromFile("Img/lv3.png");
+	//
 
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
-
+							//Sounds
 	SoundBuffer clickBuffer;
 		clickBuffer.loadFromFile("Sound/click.ogg");
+
 	SoundBuffer menuMusicBuffer;
-		menuMusicBuffer.loadFromFile("Sound/menu_v1.ogg");
-	SoundBuffer gameMusicBuffer;
-		gameMusicBuffer.loadFromFile("Sound/battle_v1.ogg");
+		menuMusicBuffer.loadFromFile("Sound/menu.ogg");
+
+	SoundBuffer game1MusicBuffer;
+		game1MusicBuffer.loadFromFile("Sound/battle1.ogg");
+	SoundBuffer game2MusicBuffer;
+		game2MusicBuffer.loadFromFile("Sound/battle2.ogg");
+	SoundBuffer game3MusicBuffer;
+		game3MusicBuffer.loadFromFile("Sound/battle3.ogg");
 
 	Sound clickSound;
 		clickSound.setBuffer(clickBuffer);
@@ -53,15 +60,21 @@ int main() {
 		menuMusic.setBuffer(menuMusicBuffer);
 		menuMusic.setVolume(10);
 		
-	Sound gameMusic;
-		gameMusic.setBuffer(gameMusicBuffer);
-		gameMusic.setVolume(20);
+	Sound game1Music;
+		game1Music.setBuffer(game1MusicBuffer);
+		game1Music.setVolume(20);
+	Sound game2Music;
+		game2Music.setBuffer(game2MusicBuffer);
+		game2Music.setVolume(20);
+	Sound game3Music;
+		game3Music.setBuffer(game3MusicBuffer);
+		game3Music.setVolume(20);
 
-	Sound sound[2] = { menuMusic, gameMusic };
+	Sound sound[4] = { menuMusic, game1Music, game2Music, game3Music };
 
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
-
+							//Field
 	const Field field1{ Vector2i{974,215},Vector2i{1095,259} };
 	const Field field2{ Vector2i{980,274},Vector2i{1094,309} };
 	const Field field3{ Vector2i{980,328},Vector2i{1094,369} };
@@ -69,8 +82,14 @@ int main() {
 
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
+							//IntRect
+	IntRect mapRect[8]{ IntRect{1,1,3,3}, IntRect{80,80,80,80}, IntRect{0,80,80,80}, IntRect{80,0,80,80},
+		IntRect{0,160,80,80}, IntRect{0,0,80,80}, IntRect{160,0,80,80}, IntRect{80,160,80,80}, };
 
-	TowerDefense game;
+/////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+							//Game
+	TowerDefense game(&app);
 		game.menu.setSize(Vector2f{ 1280,720 });
 		game.menu.setTexture(&mainMenu);
 		game.menu.loadField(field1, field2, field3, field4);
@@ -87,8 +106,10 @@ int main() {
 		game.credits.loadField(field1, field2, field3, field4);
 		game.credits.loadSound(&clickSound);
 
-		game.setWindow(&app);
 		game.setSound(sound);
+
+		game.map.loadIntRect(mapRect);
+		game.map.setTexture(&lv1);
 
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
