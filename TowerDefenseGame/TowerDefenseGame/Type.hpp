@@ -4,13 +4,11 @@ namespace Type {
 	
 	enum Mob {
 		Empty,
-		mob1,
-		mob2
+		FireDude
 	};
 
 	enum Content {
 		Grass,
-		Bush,
 		Rock,
 		RoadNS,
 		RoadEW,
