@@ -5,6 +5,7 @@
 #include "Type.hpp"
 #include "TowerDefense.hpp"
 #include <iostream>
+#include "Monsters.hpp"
 
 using namespace sf;
 
@@ -46,7 +47,7 @@ int main() {
 		menuMusicBuffer.loadFromFile("Sound/menu.ogg");
 
 	SoundBuffer game1MusicBuffer;
-		game1MusicBuffer.loadFromFile("Sound/battle1.ogg");
+		game1MusicBuffer.loadFromFile("Sound/lv2.ogg");
 	SoundBuffer game2MusicBuffer;
 		game2MusicBuffer.loadFromFile("Sound/battle2.ogg");
 	SoundBuffer game3MusicBuffer;
@@ -111,11 +112,42 @@ int main() {
 		game.map.loadIntRect(mapRect);
 		game.map.setTexture(&lv1);
 
+		game.map.setContent(0, Type::Content::RoadEW);
+		game.map.setContent(1, Type::Content::RoadSW);
+		game.map.setContent(2, Type::Content::Rock);
+		game.map.setContent(3, Type::Content::RoadES);
+		game.map.setContent(4, Type::Content::RoadEW);
+		game.map.setContent(5, Type::Content::RoadEW);
+		game.map.setContent(17, Type::Content::RoadNE);
+		game.map.setContent(18, Type::Content::RoadEW);
+		game.map.setContent(19, Type::Content::RoadWN);
+
+
+		Texture texturee; texturee.loadFromFile("Img/FireDude.png");
+		IntRect rectt[4]{ IntRect{0,0,100,100}, IntRect{100,0,100,100}, IntRect{0,100,100,100}, IntRect{100,100,100,100}, };
+		Type::Direct direct[]{ Type::Direct::Right,Type::Direct::Right,Type::Direct::WS,Type::Direct::NE,Type::Direct::Right,Type::Direct::WN,Type::Direct::SE,
+		Type::Direct::Right,Type::Direct::Right };
+
+		
+
+		game.fireDude.setTexture(&texturee);
+		game.fireDude.setSize(Vector2f{ 80,80 });
+		game.fireDude.loadIntRect(rectt);
+		game.fireDude.setMoveNumber(9);
+		game.fireDude.setMob(Type::Mob::FireDude);
+		game.fireDude.setRoad(direct);
+		game.fireDude.setOrigin(Vector2f{ 40,40 });
+		game.fireDude.setPosition(Vector2f{ -40,40 });
+		game.fireDude.reset();
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
 
+
+
+
 	//Main loop
 	while (app.isOpen()) {
+		
 
 		//Event loop
 		Event event;
@@ -138,6 +170,8 @@ int main() {
 			}
 
 		}
+
+		game.run();
 
 		//Draw
 		app.clear();
