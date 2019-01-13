@@ -13,32 +13,27 @@ int main() {
 /////////////////////////////////////////////////////////////////////////////////////
 
 	RenderWindow app{ VideoMode{1280,720,},"TowerDefense",Style::Close };
-		app.setFramerateLimit(144);
+		app.setFramerateLimit(60);
 
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
 
 	Texture mainMenu;
 		mainMenu.loadFromFile("Img/MenuMain.png");
-	Texture optionsMenu;
-		optionsMenu.loadFromFile("Img/MenuOptions.png");
+	Texture optionsMenu[4];
+		optionsMenu[0].loadFromFile("Img/MenuOptions60on.png");
+		optionsMenu[1].loadFromFile("Img/MenuOptions144on.png");
+		optionsMenu[2].loadFromFile("Img/MenuOptions60off.png");
+		optionsMenu[3].loadFromFile("Img/MenuOptions144off.png");
 	Texture creditsMenu;
 		creditsMenu.loadFromFile("Img/MenuCredits.png");
 	//
-	Texture grass;
-		grass.loadFromFile("img/Grass.png");
-	Texture bush;
-		bush.loadFromFile("img/Bush.png");
-	Texture rock;
-		rock.loadFromFile("img/Rock.png");
-
-	Texture roadT[6];	Texture* road = roadT;
-		(road + 0)->loadFromFile("img/RoadNS.png");
-		(road + 1)->loadFromFile("img/RoadEW.png");
-		(road + 2)->loadFromFile("img/RoadNE.png");
-		(road + 3)->loadFromFile("img/RoadES.png");
-		(road + 4)->loadFromFile("img/RoadSW.png");
-		(road + 5)->loadFromFile("img/RoadWN.png");
+	Texture lv1;
+		lv1.loadFromFile("Img/lv1.png");
+	Texture lv2;
+		lv2.loadFromFile("Img/lv2.png");
+	Texture lv3;
+		lv3.loadFromFile("Img/lv3.png");
 
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
@@ -82,9 +77,10 @@ int main() {
 		game.menu.loadSound(&clickSound);
 
 		game.options.setSize(Vector2f{ 1280,720 });
-		game.options.setTexture(&optionsMenu);
+		game.setOptionsTexture(optionsMenu);
 		game.options.loadField(field1, field2, field3, field4);
 		game.options.loadSound(&clickSound);
+		
 
 		game.credits.setSize(Vector2f{ 1280,720 });
 		game.credits.setTexture(&creditsMenu);
