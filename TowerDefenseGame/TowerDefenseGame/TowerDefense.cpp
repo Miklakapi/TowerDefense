@@ -40,6 +40,12 @@ void TowerDefense::setOptionsTexture(Texture* texture) {
 	options.setTexture((texture));
 }
 
+void TowerDefense::run() {
+	if (game == true) {
+		fireDude.moveMonster();
+	}
+}
+
 void TowerDefense::click(Vector2i mousePosition, Mouse::Button button) {
 	if (button == Mouse::Button::Left) {
 		if (menu.open) {
@@ -138,5 +144,6 @@ void TowerDefense::drawAll() {
 	else if (credits.open)window->draw(credits);
 	else if (game) {
 		map.drawAll();
+		window->draw(fireDude);
 	}
 }
