@@ -20,8 +20,6 @@ class TowerDefense {
 
 	int round;
 
-	Texture* textureOptions;
-
 	IntRect* mapRect;
 
 	//
@@ -42,11 +40,9 @@ public:
 
 	//
 
-	TowerDefense(RenderWindow* window);
+	TowerDefense(RenderWindow* window, string file);
 
 	void setSound(Sound* sound);
-
-	void setOptionsTexture(Texture* texture);
 
 	void run();
 
