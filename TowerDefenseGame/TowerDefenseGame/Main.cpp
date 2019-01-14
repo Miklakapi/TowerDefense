@@ -2,17 +2,20 @@
 #include <SFML\Window.hpp>
 #include <SFML\System.hpp>
 #include <SFML\Graphics.hpp>
+#include <iostream>
+#include <fstream>
 #include "Type.hpp"
 #include "TowerDefense.hpp"
-#include <iostream>
 #include "Monsters.hpp"
 
 using namespace sf;
+using namespace std;
 
 int main() {
+	string file = "settings.txt";
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
-
+							//Window Settings
 	RenderWindow app{ VideoMode{1280,720,},"TowerDefense",Style::Close };
 		app.setFramerateLimit(60);
 
@@ -47,7 +50,7 @@ int main() {
 		menuMusicBuffer.loadFromFile("Sound/menu.ogg");
 
 	SoundBuffer game1MusicBuffer;
-		game1MusicBuffer.loadFromFile("Sound/lv2.ogg");
+		game1MusicBuffer.loadFromFile("Sound/battle1.ogg");
 	SoundBuffer game2MusicBuffer;
 		game2MusicBuffer.loadFromFile("Sound/battle2.ogg");
 	SoundBuffer game3MusicBuffer;
@@ -71,7 +74,7 @@ int main() {
 		game3Music.setBuffer(game3MusicBuffer);
 		game3Music.setVolume(20);
 
-	Sound sound[4] = { menuMusic, game1Music, game2Music, game3Music };
+	Sound sounds[4] = { menuMusic, game1Music, game2Music, game3Music };
 
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
@@ -90,16 +93,16 @@ int main() {
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
 							//Game
-	TowerDefense game(&app);
+	TowerDefense game(&app,file);
 		game.menu.setSize(Vector2f{ 1280,720 });
 		game.menu.setTexture(&mainMenu);
 		game.menu.loadField(field1, field2, field3, field4);
 		game.menu.loadSound(&clickSound);
 
 		game.options.setSize(Vector2f{ 1280,720 });
-		game.setOptionsTexture(optionsMenu);
 		game.options.loadField(field1, field2, field3, field4);
 		game.options.loadSound(&clickSound);
+		game.options.loadTextures(optionsMenu);
 		
 
 		game.credits.setSize(Vector2f{ 1280,720 });
@@ -107,7 +110,7 @@ int main() {
 		game.credits.loadField(field1, field2, field3, field4);
 		game.credits.loadSound(&clickSound);
 
-		game.setSound(sound);
+		game.setSound(sounds);
 
 		game.map.loadIntRect(mapRect);
 		game.map.setTexture(&lv1);
