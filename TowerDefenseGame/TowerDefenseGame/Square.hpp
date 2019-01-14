@@ -9,8 +9,6 @@ using namespace sf;
 
 class Square :public RectangleShape{
 
-	
-
 	Type::Content content;
 
 public:
