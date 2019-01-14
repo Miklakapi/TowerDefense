@@ -37,7 +37,7 @@ public:
 
 	void setRoad(Type::Direct* direct);
 
-	void setMob(Type::Mob);
+	void setMob(Type::Mob mob);
 
 	Type::Mob getMob();
 
