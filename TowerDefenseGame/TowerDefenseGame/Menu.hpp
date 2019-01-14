@@ -6,6 +6,7 @@
 #include "Type.hpp"
 
 using namespace sf;
+using namespace std;
 
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
@@ -25,6 +26,8 @@ class MenuPlan :public RectangleShape {
 
 protected:
 
+	RenderWindow* window;
+
 	Field field1;
 	Field field2;
 	Field field3;
@@ -39,6 +42,8 @@ public:
 	//
 
 	MenuPlan();
+
+	MenuPlan(RenderWindow* window);
 
 	void loadField(Field field1, Field field2, Field field3, Field field4);
 
@@ -66,11 +71,17 @@ public:
 
 class Options :public MenuPlan {
 
+	string file;
+
+	Texture* texture;
+
 public:
 
 	int settings;
 
-	Options();
+	Options(RenderWindow* window, string file);
+
+	void loadTextures(Texture* texture);
 
 	Type::Options click(Vector2i mousePosition, bool playSound);
 
