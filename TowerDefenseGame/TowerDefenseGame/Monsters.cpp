@@ -4,28 +4,20 @@
 #include <SFML\Graphics.hpp>
 #include "Type.hpp"
 #include "Monsters.hpp"
-#include <iostream>
 
 using namespace sf;
 
-IntRect* Monsters::monsterRect = NULL;
+IntRect* Monsters::rect = NULL;
 Type::Direct* Monsters::direct = NULL;
+int Monsters::moveNumber = 0;
 
 void Monsters::loadIntRect(IntRect* rect) {
-	monsterRect = rect;
+	this->rect = rect;
 }
 
-void Monsters::setRoad(Type::Direct* direct) {
+void Monsters::setRoad(Type::Direct* direct, int moveNumber) {
 	this->direct = direct;
-}
-
-void Monsters::setMob(Type::Mob mob) {
-	this->mob = mob;
-	setTextureRect(*(monsterRect));
-}
-
-Type::Mob Monsters::getMob() {
-	return mob;
+	this->moveNumber = moveNumber;
 }
 
 void Monsters::setHealth(int helath) {
@@ -35,10 +27,6 @@ void Monsters::setHealth(int helath) {
 
 void Monsters::setSpeed(int speed) {
 	this->speed = speed;
-}
-
-void Monsters::setMoveNumber(int moveNumber) {
-	this->moveNumber = moveNumber;
 }
 
 void Monsters::dmg(int damage) {
@@ -51,57 +39,56 @@ bool Monsters::isLive() {
 }
 
 void Monsters::reset() {
-	setMob(mob);
 	live = true;
 	health = copyHealth;
 	miniMove = 0;
 	aMove = 0;
 }
 
-int Monsters::moveMonster() {
+bool Monsters::moveMonster() {
 	
-	if (clock.getElapsedTime().asSeconds() < 0.1 || live == false || aMove == moveNumber) return -1;
+	if (clock.getElapsedTime().asSeconds() < 0.1 || live == false || aMove == moveNumber) return false;
 	clock.restart();
 
 	miniMove++;
 
 	if (aMove == 0 && miniMove == 1) {
 		miniMove = 6;
-		setTextureRect(*(monsterRect));
+		setTextureRect(*(rect));
 		actualDirect = *direct;
 	}
 
 	if (miniMove == 6) {
 		if (*(direct + aMove) == Type::Direct::EN) {
-			setTextureRect(*(monsterRect + Type::Direct::Top));
+			setTextureRect(*(rect + Type::Direct::Top));
 			actualDirect = Type::Direct::Top;
 		}
 		else if (*(direct + aMove) == Type::Direct::NE) {
-			setTextureRect(*(monsterRect + Type::Direct::Right));
+			setTextureRect(*(rect + Type::Direct::Right));
 			actualDirect = Type::Direct::Right;
 		}
 		else if (*(direct + aMove) == Type::Direct::ES) {
-			setTextureRect(*(monsterRect + Type::Direct::Bottom));
+			setTextureRect(*(rect + Type::Direct::Bottom));
 			actualDirect = Type::Direct::Bottom;
 		}
 		else if (*(direct + aMove) == Type::Direct::SE) {
-			setTextureRect(*(monsterRect + Type::Direct::Right));
+			setTextureRect(*(rect + Type::Direct::Right));
 			actualDirect = Type::Direct::Right;
 		}
 		else if (*(direct + aMove) == Type::Direct::SW) {
-			setTextureRect(*(monsterRect + Type::Direct::Left));
+			setTextureRect(*(rect + Type::Direct::Left));
 			actualDirect = Type::Direct::Left;
 		}
 		else if (*(direct + aMove) == Type::Direct::WS) {
-			setTextureRect(*(monsterRect + Type::Direct::Bottom));
+			setTextureRect(*(rect + Type::Direct::Bottom));
 			actualDirect = Type::Direct::Bottom;
 		}
 		else if (*(direct + aMove) == Type::Direct::NW) {
-			setTextureRect(*(monsterRect + Type::Direct::Left));
+			setTextureRect(*(rect + Type::Direct::Left));
 			actualDirect = Type::Direct::Left;
 		}
 		else if (*(direct + aMove) == Type::Direct::WN) {
-			setTextureRect(*(monsterRect + Type::Direct::Top));
+			setTextureRect(*(rect + Type::Direct::Top));
 			actualDirect = Type::Direct::Top;
 		}
 	}
@@ -125,5 +112,10 @@ int Monsters::moveMonster() {
 		aMove++;
 		miniMove = 0;
 	}
-	return ((moveNumber * 10) + miniMove);
+
+	if (aMove == moveNumber) {
+		live = false;
+		return true;
+	}
+	else return false;
 }
