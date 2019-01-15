@@ -6,6 +6,7 @@
 #include "Monsters.hpp"
 
 using namespace sf;
+using namespace std;
 
 IntRect* Monsters::rect = NULL;
 Type::Direct* Monsters::direct = NULL;
@@ -18,6 +19,7 @@ void Monsters::loadIntRect(IntRect* rect) {
 void Monsters::setRoad(Type::Direct* direct, int moveNumber) {
 	this->direct = direct;
 	this->moveNumber = moveNumber;
+	setTextureRect(*(rect+*direct));
 }
 
 void Monsters::setHealth(int helath) {
@@ -47,14 +49,14 @@ void Monsters::reset() {
 
 bool Monsters::moveMonster() {
 	
-	if (clock.getElapsedTime().asSeconds() < (speed/100) || live == false || aMove == moveNumber) return false;
+	if (clock.getElapsedTime().asSeconds() < float(speed/100.f) || live == false || aMove == moveNumber) return false;
 	clock.restart();
 
 	miniMove++;
 
 	if (aMove == 0 && miniMove == 1) {
 		miniMove = 6;
-		setTextureRect(*(rect));
+		setTextureRect(*(rect+*direct));
 		actualDirect = *direct;
 	}
 
