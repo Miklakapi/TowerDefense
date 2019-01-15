@@ -7,6 +7,7 @@
 #include "Type.hpp"
 #include "TowerDefense.hpp"
 #include "Monsters.hpp"
+#include "LvReader.hpp"
 
 using namespace sf;
 using namespace std;
@@ -92,6 +93,34 @@ int main() {
 
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
+
+	Type::Direct direct[]{ Type::Direct::Left,Type::Direct::Left,Type::Direct::WS,Type::Direct::NE,Type::Direct::Left,Type::Direct::WN,Type::Direct::SE,
+		Type::Direct::Left,Type::Direct::Left,Type::Direct::Left,Type::Direct::Left,Type::Direct::Left,Type::Direct::Left,Type::Direct::Left,
+	Type::Direct::Right ,Type::Direct::Right ,Type::Direct::Right ,Type::Direct::Right ,Type::Direct::Right ,Type::Direct::Right ,Type::Direct::Right };
+
+	Map map(&app, &lv1, mapRect);
+
+	Texture texturee; texturee.loadFromFile("Img/FireDude.png");
+	IntRect rectt[4]{ IntRect{0,0,100,100}, IntRect{100,0,100,100}, IntRect{0,100,100,100}, IntRect{100,100,100,100}, };
+
+	LvReader reader(&map);
+	reader.setFile("lv1.txt");
+
+	
+	Monsters monster;
+	
+	monster.reset();
+
+	monster.setTexture(&texturee);
+	monster.loadIntRect(rectt);
+	monster.setOrigin(40, 40);
+	
+	monster.setPosition(Vector2f{ float(reader.getStartPosition().x),float(reader.getStartPosition().y) });
+	monster.setSize(Vector2f{ 80,80 });
+	monster.setRoad(reader.getDirect(), reader.getMoveNumber());
+	monster.setHealth(100);
+	monster.setSpeed(5);
+
 							//Game
 	/*TowerDefense game(&app,file);
 		game.menu.setSize(Vector2f{ 1280,720 });
@@ -126,10 +155,8 @@ int main() {
 		game.map.setContent(19, Type::Content::RoadWN);
 
 
-		Texture texturee; texturee.loadFromFile("Img/FireDude.png");
-		IntRect rectt[4]{ IntRect{0,0,100,100}, IntRect{100,0,100,100}, IntRect{0,100,100,100}, IntRect{100,100,100,100}, };
-		Type::Direct direct[]{ Type::Direct::Right,Type::Direct::Right,Type::Direct::WS,Type::Direct::NE,Type::Direct::Right,Type::Direct::WN,Type::Direct::SE,
-		Type::Direct::Right,Type::Direct::Right };
+		
+		
 
 		
 
@@ -173,10 +200,12 @@ int main() {
 		}
 
 		//game.run();
-
+		monster.moveMonster();
 		//Draw
 		app.clear();
 			//game.drawAll();
+		map.drawAll();
+		app.draw(monster);
 		app.display();
 	}
 	return 0;
