@@ -14,15 +14,13 @@ private:
 
 	Clock clock;
 
-	static IntRect* monsterRect;
+	static IntRect* rect;
 
 	static Type::Direct* direct;
 	Type::Direct actualDirect;
-	int moveNumber;
+	static int moveNumber;
 	int aMove;
 	int miniMove;
-
-	Type::Mob mob;
 
 	bool live;
 
@@ -35,17 +33,11 @@ public:
 
 	void loadIntRect(IntRect* rect);
 
-	void setRoad(Type::Direct* direct);
-
-	void setMob(Type::Mob mob);
-
-	Type::Mob getMob();
+	void setRoad(Type::Direct* direct, int moveNumber);
 
 	void setHealth(int helath);
 
 	void setSpeed(int speed);
-
-	void setMoveNumber(int moveNumber);
 
 	void dmg(int damage);
 
@@ -53,6 +45,6 @@ public:
 
 	void reset();
 
-	int moveMonster();
+	bool moveMonster();
 
 };
