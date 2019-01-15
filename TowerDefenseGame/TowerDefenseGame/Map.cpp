@@ -6,28 +6,19 @@
 #include "Square.hpp"
 #include "Map.hpp"
 
-Map::Map(RenderWindow* window) {
+Map::Map(RenderWindow* window, Texture* texture, IntRect* rect) {
 	this->window = window;
 	square = new Square[144];
+	square->loadIntRect(rect);
 	int i(0);
 	for (int y = 0; y < 9; y++) {
 		for (int x = 0; x < 16; x++) {
 			(square + i)->setPosition(Vector2f(float(x * 80), float(y * 80)));
 			(square + i)->setSize(Vector2f{ 80,80 });
+			(square + i)->setTexture(texture);
+			(square + i)->reset();
 			i++;
 		}
-	}
-}
-
-void Map::setTexture(Texture* texture) {
-	for (int i = 0; i < 144; i++) {
-		(square + i)->setTexture(texture);
-	}
-}
-
-void Map::loadIntRect(IntRect* rect) {
-	for (int i = 0; i < 144; i++) {
-		(square + i)->loadIntRect(rect);
 	}
 }
 
@@ -45,4 +36,8 @@ void Map::setContent(Type::Content content) {
 
 void Map::setContent(int nr, Type::Content content) {
 	(square + nr)->setContent(content);
+}
+
+Type::Content Map::getElement(int nr) {
+	return (square + nr)->getContent();
 }
