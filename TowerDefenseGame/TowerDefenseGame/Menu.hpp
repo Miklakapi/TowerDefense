@@ -26,8 +26,6 @@ class MenuPlan :public RectangleShape {
 
 protected:
 
-	RenderWindow* window;
-
 	Field field1;
 	Field field2;
 	Field field3;
@@ -43,14 +41,11 @@ public:
 
 	MenuPlan();
 
-	MenuPlan(RenderWindow* window);
-
 	void loadField(Field field1, Field field2, Field field3, Field field4);
 
 	void loadSound(Sound* clickSound);
 
 	virtual Type::Options click(Vector2i mousePosition, bool playSound);
-
 };
 
 /////////////////////////////////////////////////////////////////////////////////////
@@ -63,13 +58,14 @@ public:
 	Menu();
 
 	Type::Options click(Vector2i mousePosition, bool playSound);
-
 };
 
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
 
 class Options :public MenuPlan {
+
+	RenderWindow* window;
 
 	string file;
 
