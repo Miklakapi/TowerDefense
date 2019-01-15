@@ -47,7 +47,7 @@ void Monsters::reset() {
 
 bool Monsters::moveMonster() {
 	
-	if (clock.getElapsedTime().asSeconds() < 0.1 || live == false || aMove == moveNumber) return false;
+	if (clock.getElapsedTime().asSeconds() < (speed/100) || live == false || aMove == moveNumber) return false;
 	clock.restart();
 
 	miniMove++;
