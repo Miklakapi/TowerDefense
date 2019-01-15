@@ -15,9 +15,9 @@ class LvReader {
 
 	Vector2i startPosition;
 
-	Type::Direct* direct;
-
 	int moveNumber;
+
+	Type::Direct* direct;
 
 public:
 
