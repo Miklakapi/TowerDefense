@@ -16,11 +16,7 @@ class Map {
 
 public:
 
-	Map(RenderWindow* window);
-
-	void setTexture(Texture* texture);
-
-	void loadIntRect(IntRect* rect);
+	Map(RenderWindow* window, Texture* texture, IntRect* rect);
 
 	void drawAll();
 
@@ -28,4 +24,5 @@ public:
 
 	void setContent(int nr, Type::Content content);
 
+	Type::Content getElement(int nr);
 };
