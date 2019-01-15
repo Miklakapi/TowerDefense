@@ -93,7 +93,7 @@ int main() {
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
 							//Game
-	TowerDefense game(&app,file);
+	/*TowerDefense game(&app,file);
 		game.menu.setSize(Vector2f{ 1280,720 });
 		game.menu.setTexture(&mainMenu);
 		game.menu.loadField(field1, field2, field3, field4);
@@ -136,12 +136,10 @@ int main() {
 		game.fireDude.setTexture(&texturee);
 		game.fireDude.setSize(Vector2f{ 80,80 });
 		game.fireDude.loadIntRect(rectt);
-		game.fireDude.setMoveNumber(9);
-		game.fireDude.setMob(Type::Mob::FireDude);
-		game.fireDude.setRoad(direct);
+		game.fireDude.setRoad(direct,9);
 		game.fireDude.setOrigin(Vector2f{ 40,40 });
 		game.fireDude.setPosition(Vector2f{ -40,40 });
-		game.fireDude.reset();
+		game.fireDude.reset();*/
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
 
@@ -161,7 +159,7 @@ int main() {
 			if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape) {
 				//
 			}
-
+			/*
 			if (event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left) {
 				Vector2i mousePosition = Mouse::getPosition(app);
 				game.click(mousePosition, Mouse::Left);
@@ -170,15 +168,15 @@ int main() {
 			if (event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Right) {
 				Vector2i mousePosition = Mouse::getPosition(app);
 				game.click(mousePosition, Mouse::Right);
-			}
+			}*/
 
 		}
 
-		game.run();
+		//game.run();
 
 		//Draw
 		app.clear();
-			game.drawAll();
+			//game.drawAll();
 		app.display();
 	}
 	return 0;
