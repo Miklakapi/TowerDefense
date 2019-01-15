@@ -7,7 +7,6 @@
 #include "Map.hpp"
 #include "LvReader.hpp"
 
-using namespace std;
 using namespace sf;
 
 LvReader::LvReader(Map* map) {
@@ -27,7 +26,7 @@ void LvReader::setFile(string file) {
 		getline(stream, line);
 		for (int x = 0; x < 16; x++) {
 			Type::Content content;
-			switch (line.at(i)) {
+			switch (line.at(x)) {
 			case '#':
 				content = Type::Content::Grass;
 				break;
@@ -54,30 +53,33 @@ void LvReader::setFile(string file) {
 				break;
 			case 'S':
 				content = Type::Content::RoadEW;
-				startPosition = Vector2i{ ((x * 80) + 40),((y * 80) + 40) };
+				startPosition = Vector2i{ (((x + 1) * 80) + 40),((y * 80) + 40) };
+				break;
+			default:
+				system("pause");
 				break;
 			}
-			(map + i)->setContent(content);
+			map->setContent(i,content);
 			i++;
 		}
 	}
 	getline(stream, line);
 	moveNumber = stoi(line);
-	direct = new Type::Direct[moveNumber];
+	direct = new Type::Direct [moveNumber];
 	for (int a = 0; a < moveNumber; a++) {
 		getline(stream, line);
-		if (line == "Right") direct[i] = Type::Direct::Right;
-		else if (line == "Bottom") direct[i] = Type::Direct::Bottom;
-		else if (line == "Top") direct[i] = Type::Direct::Top;
-		else if (line == "Left") direct[i] = Type::Direct::Left;
-		else if (line == "EN") direct[i] = Type::Direct::EN;
-		else if (line == "NE") direct[i] = Type::Direct::NE;
-		else if (line == "ES") direct[i] = Type::Direct::ES;
-		else if (line == "SE") direct[i] = Type::Direct::SE;
-		else if (line == "SW") direct[i] = Type::Direct::SW;
-		else if (line == "WS") direct[i] = Type::Direct::WS;
-		else if (line == "NW") direct[i] = Type::Direct::NW;
-		else if (line == "WN") direct[i] = Type::Direct::WN;
+		if (line == "Right") *(direct + a) = Type::Direct::Right;
+		else if (line == "Bottom") *(direct + a) = Type::Direct::Bottom;
+		else if (line == "Top") *(direct + a) = Type::Direct::Top;
+		else if (line == "Left")*(direct + a) = Type::Direct::Left;
+		else if (line == "EN") *(direct + a) = Type::Direct::EN;
+		else if (line == "NE") *(direct + a) = Type::Direct::NE;
+		else if (line == "ES") *(direct + a) = Type::Direct::ES;
+		else if (line == "SE") *(direct + a) = Type::Direct::SE;
+		else if (line == "SW") *(direct + a) = Type::Direct::SW;
+		else if (line == "WS") *(direct + a) = Type::Direct::WS;
+		else if (line == "NW") *(direct + a) = Type::Direct::NW;
+		else if (line == "WN") *(direct + a) = Type::Direct::WN;
 	}
 	stream.close();
 }
