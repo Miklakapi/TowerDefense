@@ -21,6 +21,10 @@ void Square::setContent(Type::Content content) {
 	setTextureRect(*(rect + content));
 }
 
+Type::Content Square::getContent() {
+	return content;
+}
+
 void Square::reset() {
 	setContent(Type::Content::Grass);
 }
