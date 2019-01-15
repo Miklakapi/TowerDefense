@@ -15,7 +15,8 @@ namespace Type {
 		RoadNE,
 		RoadES,
 		RoadSW,
-		RoadWN
+		RoadWN,
+		Base
 	};
 
 	enum Weapon {
