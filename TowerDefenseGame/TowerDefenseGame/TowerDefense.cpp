@@ -10,7 +10,7 @@
 using namespace sf;
 using namespace std;
 
-TowerDefense::TowerDefense(RenderWindow* window, string file) : map(window), options(window,file) {
+TowerDefense::TowerDefense(RenderWindow* window, string file, Texture* texture, IntRect* rect) : map(window, texture, rect), options(window,file) {
 	this->window = window;
 	if(options.settings == 1 || options.settings == 0)music = true;
 	round = 1;
