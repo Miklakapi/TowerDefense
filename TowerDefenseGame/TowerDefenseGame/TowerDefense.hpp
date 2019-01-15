@@ -40,7 +40,7 @@ public:
 
 	//
 
-	TowerDefense(RenderWindow* window, string file);
+	TowerDefense(RenderWindow* window, string file, Texture* texture, IntRect* rect);
 
 	void setSound(Sound* sound);
 
