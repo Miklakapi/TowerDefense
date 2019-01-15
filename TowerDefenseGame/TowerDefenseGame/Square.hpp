@@ -21,5 +21,7 @@ public:
 
 	void setContent(Type::Content content);
 
+	Type::Content getContent();
+
 	void reset();
 };
