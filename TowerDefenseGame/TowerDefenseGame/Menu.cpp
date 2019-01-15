@@ -24,8 +24,6 @@ Field::Field(Vector2i left, Vector2i right) {
 
 MenuPlan::MenuPlan() : RectangleShape() {};
 
-MenuPlan::MenuPlan(RenderWindow* window) : RectangleShape() {};
-
 void MenuPlan::loadField(Field field1, Field field2, Field field3, Field field4) {
 	this->field1 = field1;
 	this->field2 = field2;
