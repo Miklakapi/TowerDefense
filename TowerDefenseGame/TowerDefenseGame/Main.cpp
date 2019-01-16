@@ -8,6 +8,7 @@
 #include "TowerDefense.hpp"
 #include "Monsters.hpp"
 #include "LvReader.hpp"
+#include "Towers.hpp"
 
 using namespace sf;
 using namespace std;
@@ -40,6 +41,8 @@ int main() {
 	Texture lv3;
 		lv3.loadFromFile("Img/lv3.png");
 	//
+		Texture towertx;
+		towertx.loadFromFile("Img/Tower.png");
 
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
@@ -121,6 +124,10 @@ int main() {
 	monster.setHealth(100);
 	monster.setSpeed(5);
 
+	Tower tower;
+	tower.setTexture(&towertx);
+	tower.setPosition(Vector2f(560+40, 240+40));
+
 							//Game
 	/*TowerDefense game(&app,file);
 		game.menu.setSize(Vector2f{ 1280,720 });
@@ -198,14 +205,19 @@ int main() {
 			}*/
 
 		}
-
+		monster.dmg(tower.shoot(&monster));
 		//game.run();
 		monster.moveMonster();
 		//Draw
 		app.clear();
 			//game.drawAll();
 		map.drawAll();
-		app.draw(monster);
+		if (monster.isLive()) {
+			app.draw(monster);
+		}
+		tower.deviation(&monster);
+		
+		app.draw(tower);
 		app.display();
 	}
 	return 0;
