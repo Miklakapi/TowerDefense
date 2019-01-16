@@ -22,9 +22,10 @@ void Monsters::setRoad(Type::Direct* direct, int moveNumber) {
 	setTextureRect(*(rect+*direct));
 }
 
-void Monsters::setHealth(int helath) {
-	copyHealth = health;
+void Monsters::setHealth(int health) {
+	
 	this->health = health;
+	copyHealth = health;
 }
 
 void Monsters::setSpeed(int speed) {
@@ -32,8 +33,9 @@ void Monsters::setSpeed(int speed) {
 }
 
 void Monsters::dmg(int damage) {
-	health -= damage;
+	health = health - damage;
 	if (health <= 0) live = false;
+	else live = true;
 }
 
 bool Monsters::isLive() {
