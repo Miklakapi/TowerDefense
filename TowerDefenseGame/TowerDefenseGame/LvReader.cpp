@@ -53,7 +53,7 @@ void LvReader::setFile(string file) {
 				break;
 			case 'S':
 				content = Type::Content::RoadEW;
-				startPosition = Vector2i{ (((x + 1) * 80) + 40),((y * 80) + 40) };
+				startPosition = Vector2f{ float((((x + 1) * 80) + 40)),float(((y * 80) + 40)) };
 				break;
 			default:
 				system("pause");
@@ -92,6 +92,6 @@ int LvReader::getMoveNumber() {
 	return moveNumber;
 }
 
-Vector2i LvReader::getStartPosition() {
+Vector2f LvReader::getStartPosition() {
 	return startPosition;
 }
