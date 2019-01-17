@@ -13,7 +13,7 @@ class LvReader {
 
 	Map* map;
 
-	Vector2i startPosition;
+	Vector2f startPosition;
 
 	int moveNumber;
 
@@ -29,5 +29,5 @@ public:
 
 	int getMoveNumber();
 
-	Vector2i getStartPosition();
+	Vector2f getStartPosition();
 };
