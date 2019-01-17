@@ -31,6 +31,8 @@ private:
 
 public:	
 
+	Monsters();
+
 	void loadIntRect(IntRect* rect);
 
 	void setRoad(Type::Direct* direct, int moveNumber);
