@@ -20,21 +20,22 @@ TowerDefense::TowerDefense(RenderWindow* window, Texture* menuTextures, Texture*
 	credits.setTexture(menuTextures + 1);
 	options.loadTextures(optionsTextures);
 	
-	menu.loadSound(*menuMusic);
-	credits.loadSound(*menuMusic);
-	options.loadSound(*menuMusic);
+	menu.loadSound(menuMusic);
+	credits.loadSound(menuMusic);
+	options.loadSound(menuMusic);
 	
 	menu.loadField(*(field), *(field + 1), *(field + 2), *(field + 3));
 	credits.loadField(*(field), *(field + 1), *(field + 2), *(field + 3));
 	options.loadField(*(field), *(field + 1), *(field + 2), *(field + 3));
 	
-	/*lvReader.setFile(*lvFile);
+	lvReader.setFile(*lvFile);
 
 	fireDude.loadIntRect(monsterRect);
+	fireDude.setTexture(monsterTexture);
 	fireDude.setHealth(100);
-	fireDude.setSpeed(90);
+	fireDude.setSpeed(10);
 	fireDude.setRoad(lvReader.getDirect(),lvReader.getMoveNumber());
-	fireDude.setPosition(lvReader.getStartPosition());*/
+	fireDude.setPosition(lvReader.getStartPosition());
 
 	this->window = window;
 
@@ -73,18 +74,19 @@ TowerDefense::TowerDefense(RenderWindow* window, Texture* menuTextures, Texture*
 	
 	this->lvNumbers = lvNumbers;
 
+	playSound();
 }
 
 void TowerDefense::playSound() {
 	if (!game) {
-		//(lvSounds + (round - 1))->stop();
+		(lvSounds + (round - 1))->stop();
 		if (music) menuMusic.play();
-		//else menuMusic.stop();
+		else menuMusic.stop();
 	}
 	else {
-		//menuMusic.stop();
+		menuMusic.stop();
 		if (music) (lvSounds + (round - 1))->play();
-		//else (lvSounds + (round - 1))->stop();
+		else (lvSounds + (round - 1))->stop();
 	}
 }
 
@@ -154,8 +156,8 @@ void TowerDefense::drawAll() {
 	if (menu.open)window->draw(menu);
 	else if (options.open)window->draw(options);
 	else if (credits.open)window->draw(credits);
-	//else if (game) {
-	//	map.drawAll();
-	//	if (fireDude.isLive()) window->draw(fireDude);
-	//}
+	else if (game) {
+		map.drawAll();
+		if (fireDude.isLive()) window->draw(fireDude);
+	}
 }
