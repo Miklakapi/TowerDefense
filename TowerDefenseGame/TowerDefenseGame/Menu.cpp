@@ -33,7 +33,7 @@ void MenuPlan::loadField(Field field1, Field field2, Field field3, Field field4)
 	this->field4 = field4;
 }
 
-void MenuPlan::loadSound(Sound clickSound) {
+void MenuPlan::loadSound(Sound* clickSound) {
 	this->clickSound = clickSound;
 }
 
@@ -51,22 +51,22 @@ Menu::Menu() : MenuPlan(){
 Type::Options Menu::click(Vector2i mousePosition, bool playSound) {
 
 	if (mousePosition.x > field1.leftPosition.x && mousePosition.x < field1.rightPosition.x && mousePosition.y > field1.leftPosition.y && mousePosition.y < field1.rightPosition.y) {
-		if (playSound)clickSound.play();
+		if (playSound)clickSound->play();
 		return Type::Options::Start;
 	}
 
 	else if (mousePosition.x > field2.leftPosition.x && mousePosition.x < field2.rightPosition.x && mousePosition.y > field2.leftPosition.y && mousePosition.y < field2.rightPosition.y) {
-		if (playSound)clickSound.play();
+		if (playSound)clickSound->play();
 		return Type::Options::Settings;
 	}
 
 	else if (mousePosition.x > field3.leftPosition.x && mousePosition.x < field3.rightPosition.x && mousePosition.y > field3.leftPosition.y && mousePosition.y < field3.rightPosition.y) {
-		if (playSound)clickSound.play();
+		if (playSound)clickSound->play();
 		return Type::Options::Credits;
 	}
 
 	else if (mousePosition.x > field4.leftPosition.x && mousePosition.x < field4.rightPosition.x && mousePosition.y > field4.leftPosition.y && mousePosition.y < field4.rightPosition.y) {
-		if (playSound)clickSound.play();
+		if (playSound)clickSound->play();
 		return Type::Options::Exit;
 	}
 
@@ -138,7 +138,7 @@ void Options::loadTextures(Texture* texture) {
 Type::Options Options::click(Vector2i mousePosition, bool playSound) {
 
 	if (mousePosition.x > field1.leftPosition.x && mousePosition.x < field1.rightPosition.x && mousePosition.y > field1.leftPosition.y && mousePosition.y < field1.rightPosition.y) {
-		if (playSound)clickSound.play();
+		if (playSound)clickSound->play();
 		if (settings == 0 || settings == 2) {
 			window->setFramerateLimit(144);
 			settings += 1;
@@ -152,7 +152,7 @@ Type::Options Options::click(Vector2i mousePosition, bool playSound) {
 	}
 
 	else if (mousePosition.x > field2.leftPosition.x && mousePosition.x < field2.rightPosition.x && mousePosition.y > field2.leftPosition.y && mousePosition.y < field2.rightPosition.y) {
-		if (playSound)clickSound.play();
+		if (playSound)clickSound->play();
 		if (settings == 0 || settings == 1) {
 			settings += 2;
 		}
@@ -164,7 +164,7 @@ Type::Options Options::click(Vector2i mousePosition, bool playSound) {
 	}
 
 	else if (mousePosition.x > field4.leftPosition.x && mousePosition.x < field4.rightPosition.x && mousePosition.y > field4.leftPosition.y && mousePosition.y < field4.rightPosition.y) {
-		if (playSound)clickSound.play();
+		if (playSound)clickSound->play();
 		fstream settingsF;
 		settingsF.open(file, ios::out);
 		switch (settings) {
@@ -202,7 +202,7 @@ Credits::Credits() : MenuPlan(){
 Type::Options Credits::click(Vector2i mousePosition, bool playSound) {
 
 	if (mousePosition.x > field4.leftPosition.x && mousePosition.x < field4.rightPosition.x && mousePosition.y > field4.leftPosition.y && mousePosition.y < field4.rightPosition.y) {
-		if (playSound)clickSound.play();
+		if (playSound)clickSound->play();
 		return Type::Options::Undo;
 	}
 
