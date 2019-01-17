@@ -1,2 +1,2 @@
-FPS: 144
-Sound: ON
+FPS: 60
+Sound: OFF
