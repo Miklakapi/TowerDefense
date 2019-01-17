@@ -12,6 +12,11 @@ IntRect* Monsters::rect = NULL;
 Type::Direct* Monsters::direct = NULL;
 int Monsters::moveNumber = 0;
 
+Monsters::Monsters() :RectangleShape() {
+	setSize(Vector2f{ 80,80 });
+	setOrigin(Vector2f{ 40,40 });
+}
+
 void Monsters::loadIntRect(IntRect* rect) {
 	this->rect = rect;
 }
@@ -23,7 +28,7 @@ void Monsters::setRoad(Type::Direct* direct, int moveNumber) {
 }
 
 void Monsters::setHealth(int health) {
-	
+	live = true;
 	this->health = health;
 	copyHealth = health;
 }
