@@ -7,42 +7,55 @@
 #include "Type.hpp"
 #include "Map.hpp"
 #include "Monsters.hpp"
+#include "LvReader.hpp"
+
+using namespace std;
+using namespace sf;
 
 class TowerDefense {
 
-	RenderWindow* window;
+	RenderWindow* window; //////
 
-	Sound* sound;
+	Sound menuMusic; ///////
 
-	bool game;
+	Sound* lvSounds; ///////
 
-	bool music;
+	bool game; /////////
 
-	int round;
+	bool music; ////////
 
-	IntRect* mapRect;
+	int round; //////////
 
-	//
+	string* lvFile; /////////
+
+	Menu menu; ////////
+
+	Options options; ////////
+
+	Credits credits; /////////
+
+	Map map; ////////
+
+	LvReader lvReader; ////////
+
+	int lvNumbers;
+
+	///////////
 
 	void playSound();
 
+
+
+
 public:
 
-	Menu menu;
-
-	Options options;
-
-	Credits credits;
-
-	Map map;
-
-	Monsters fireDude;
+	Monsters fireDude; ///////
 
 	//
 
-	TowerDefense(RenderWindow* window, string file, Texture* texture, IntRect* rect);
-
-	void setSound(Sound* sound);
+	TowerDefense(RenderWindow* window, Texture* menuTextures, Texture* optionsTextures, Texture* lv, Texture* monsterTexture,
+		Field* field, Sound* menuMusic, Sound* lvSounds, string optionsFile, string* lvFile,
+		IntRect* lvRect, IntRect* monsterRect, int lvNumbers);
 
 	void run();
 

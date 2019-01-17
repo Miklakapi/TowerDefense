@@ -34,7 +34,7 @@ protected:
 	Sound* clickSound;
 
 public:
-
+	
 	bool open;
 
 	//

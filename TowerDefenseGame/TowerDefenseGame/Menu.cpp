@@ -22,7 +22,9 @@ Field::Field(Vector2i left, Vector2i right) {
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
 
-MenuPlan::MenuPlan() : RectangleShape() {};
+MenuPlan::MenuPlan() : RectangleShape() {
+	setSize(Vector2f{ 1280,720 });
+}
 
 void MenuPlan::loadField(Field field1, Field field2, Field field3, Field field4) {
 	this->field1 = field1;
