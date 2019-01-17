@@ -31,10 +31,10 @@ protected:
 	Field field3;
 	Field field4;
 
-	Sound clickSound;
+	Sound* clickSound;
 
 public:
-
+	
 	bool open;
 
 	//
@@ -43,7 +43,7 @@ public:
 
 	void loadField(Field field1, Field field2, Field field3, Field field4);
 
-	void loadSound(Sound clickSound);
+	void loadSound(Sound* clickSound);
 
 	virtual Type::Options click(Vector2i mousePosition, bool playSound);
 };
