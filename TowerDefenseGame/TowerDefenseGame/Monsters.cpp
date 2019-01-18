@@ -6,7 +6,6 @@
 #include "Monsters.hpp"
 
 using namespace sf;
-using namespace std;
 
 IntRect* Monsters::rect = NULL;
 Type::Direct* Monsters::direct = NULL;
