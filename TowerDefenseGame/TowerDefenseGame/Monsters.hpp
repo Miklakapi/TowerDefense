@@ -6,7 +6,6 @@
 #include "Type.hpp"
 
 using namespace sf;
-using namespace std;
 
 class Monsters :public RectangleShape{
 
@@ -16,9 +15,10 @@ private:
 
 	static IntRect* rect;
 
-	static Type::Direct* direct;
-	Type::Direct actualDirect;
+	static Type::Direct* direct;	Type::Direct actualDirect;
+
 	static int moveNumber;
+	
 	int aMove;
 	int miniMove;
 
