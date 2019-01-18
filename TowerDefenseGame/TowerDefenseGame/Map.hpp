@@ -14,6 +14,8 @@ class Map {
 
 	Square* square;
 
+	Texture* texture;
+
 public:
 
 	Map(RenderWindow* window, Texture* texture, IntRect* rect);
@@ -24,5 +26,9 @@ public:
 
 	void setContent(int nr, Type::Content content);
 
+	void setLv(int lv);
+
 	Type::Content getElement(int nr);
+
+	~Map();
 };
