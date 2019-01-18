@@ -8,6 +8,7 @@
 
 Map::Map(RenderWindow* window, Texture* texture, IntRect* rect) {
 	this->window = window;
+	this->texture = texture;
 	square = new Square[144];
 	square->loadIntRect(rect);
 	int i(0);
@@ -38,6 +39,16 @@ void Map::setContent(int nr, Type::Content content) {
 	(square + nr)->setContent(content);
 }
 
+void Map::setLv(int lv) {
+	for (int i = 0; i < 144; i++) {
+		(square + i)->setTexture((texture+(lv-1)));
+	}
+}
+
 Type::Content Map::getElement(int nr) {
 	return (square + nr)->getContent();
+}
+
+Map::~Map() {
+	delete[] square;
 }
