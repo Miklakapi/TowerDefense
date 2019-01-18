@@ -12,11 +12,12 @@ using namespace std;
 /////////////////////////////////////////////////////////////////////////////////////
 
 struct Field {
-	Field();
-	Field(Vector2i left, Vector2i right);
 
 	Vector2i leftPosition;
 	Vector2i rightPosition;
+
+	Field();
+	Field(Vector2i left, Vector2i right);
 };
 
 /////////////////////////////////////////////////////////////////////////////////////
@@ -26,10 +27,9 @@ class MenuPlan :public RectangleShape {
 
 protected:
 
-	Field field1;
-	Field field2;
-	Field field3;
-	Field field4;
+	Field field1;	Field field2;
+
+	Field field3;	Field field4;
 
 	Sound* clickSound;
 
