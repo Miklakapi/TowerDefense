@@ -16,6 +16,7 @@ using namespace std;
 int main() {
 	string settingsFile = "settings.txt";
 	string lvFile = "lv1.txt";
+
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
 							//Window Settings
@@ -83,10 +84,10 @@ int main() {
 
 							//Game Musics
 	SoundBuffer game1MusicBuffer;
-		game1MusicBuffer.loadFromFile("Sound/battle1.ogg");
+		game1MusicBuffer.loadFromFile("Sound/battle3.ogg");
 	Sound game1Music;
 		game1Music.setBuffer(game1MusicBuffer);
-		game1Music.setVolume(20);
+		game1Music.setVolume(100);
 
 	SoundBuffer game2MusicBuffer;
 		game2MusicBuffer.loadFromFile("Sound/battle2.ogg");
