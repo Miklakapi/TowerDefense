@@ -4,6 +4,7 @@ namespace Type {
 	
 	enum Mob {
 		Empty,
+		Empty2,
 		FireDude
 	};
 
@@ -16,12 +17,14 @@ namespace Type {
 		RoadES,
 		RoadSW,
 		RoadWN,
-		Base
+		Base,
+		Tower
 	};
 
 	enum Weapon {
 		tower1,
-		tower2
+		tower2,
+		tower3
 	};
 
 	enum Direct {
