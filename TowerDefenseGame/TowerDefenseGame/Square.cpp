@@ -13,11 +13,11 @@ Square::Square() : RectangleShape() {}
 
 void Square::loadIntRect(IntRect* rect) {
 	this->rect = rect;
-	reset();
 }
 
 void Square::setContent(Type::Content content) {
 	this->content = content;
+	if (content == Type::Content::Tower) content = Type::Content::Grass;
 	setTextureRect(*(rect + content));
 }
 
