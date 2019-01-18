@@ -8,6 +8,7 @@
 #include "LvReader.hpp"
 
 using namespace sf;
+using namespace std;
 
 LvReader::LvReader(Map* map) {
 	this->map = map;
