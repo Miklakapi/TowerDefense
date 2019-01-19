@@ -84,7 +84,7 @@ int main() {
 
 							//Game Musics
 	SoundBuffer game1MusicBuffer;
-		game1MusicBuffer.loadFromFile("Sound/battle3.ogg");
+		game1MusicBuffer.loadFromFile("Sound/battle1.ogg");
 	Sound game1Music;
 		game1Music.setBuffer(game1MusicBuffer);
 		game1Music.setVolume(100);
