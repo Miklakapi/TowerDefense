@@ -2,18 +2,14 @@
 #include <SFML\Window.hpp>
 #include <SFML\System.hpp>
 #include <SFML\Graphics.hpp>
-#include <iostream>
-#include <fstream>
 #include "Type.hpp"
 #include "TowerDefense.hpp"
-#include "Monsters.hpp"
-#include "LvReader.hpp"
-#include "Towers.hpp"
 
 using namespace sf;
 using namespace std;
 
 int main() {
+
 	string settingsFile = "settings.txt";
 	string lvFile = "lv1.txt";
 
@@ -22,6 +18,13 @@ int main() {
 							//Window Settings
 	RenderWindow app{ VideoMode{1280,720,32},"TowerDefense",Style::Close };
 		app.setFramerateLimit(60);
+
+/////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+									//Fonts
+
+		Font font;
+		font.loadFromFile("Fonts/arial.ttf");
 
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
@@ -133,7 +136,6 @@ int main() {
 
 	TowerDefense game{ &app,menuTextures,optionsMenu,&lv1,&monsterTexture,
 	field,menuMusics,lvSounds,settingsFile,&lvFile,mapRect,monstersRect,1 };
-
 
 
 
