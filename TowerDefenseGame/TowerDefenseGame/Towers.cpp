@@ -35,11 +35,9 @@ int Tower::getCost() {
 }
 
 void Tower::deviation(Monsters* monster) {
-	if(inRange(monster)) {
-		Vector2f vec = monster->getPosition() - getPosition();
-		float grade = float(atan2(vec.y, vec.x) * 180 / PI);
-		setRotation(grade + 45);
-	}
+	Vector2f vec = monster->getPosition() - getPosition();
+	float grade = float(atan2(vec.y, vec.x) * 180 / PI);
+	setRotation(grade + 45);
 }
 
 bool Tower::inRange(Monsters* monster) {
@@ -48,11 +46,8 @@ bool Tower::inRange(Monsters* monster) {
 	else return false;
 }
 
-int Tower::shoot(Monsters *monster) {
-	if (inRange(monster)) {
-		if (clock.getElapsedTime().asSeconds() < 1) return 0;
-		clock.restart();
-		return damage;
-	}
-	else return 0  ;
+int Tower::shoot() {
+	if (clock.getElapsedTime().asSeconds() < 0.33) return 0;
+	clock.restart();
+	return int(damage/3);
 }
