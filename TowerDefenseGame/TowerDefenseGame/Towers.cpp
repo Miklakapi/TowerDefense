@@ -22,8 +22,16 @@ void Tower::setDamage(int damage) {
 	this->damage = damage;
 }
 
+void Tower::setCost(int cost) {
+	this->cost = cost;
+}
+
 int Tower::getRange() {
 	return range;
+}
+
+int Tower::getCost() {
+	return cost;
 }
 
 void Tower::deviation(Monsters* monster) {
