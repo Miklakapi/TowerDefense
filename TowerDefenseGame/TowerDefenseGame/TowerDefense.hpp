@@ -59,6 +59,18 @@ class TowerDefense {
 
 	//
 
+	Monsters* monsters;
+
+	Texture* monsterTextures;
+
+	//
+
+	Tower towers;
+
+	Texture* towerTextures;
+
+	//
+
 	///////////
 
 	void playSound();
@@ -76,6 +88,10 @@ public:
 	void loadRangeField();
 
 	void loadPointCounter(Font& font);
+
+	void loadMonsters(Texture* monsterTextures, IntRect* rect);
+
+	void loadTowers(Texture* towerTextures);
 
 	//
 
