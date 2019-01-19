@@ -66,6 +66,10 @@ class TowerDefense {
 
 	Texture* monsterTextures; //Array
 
+	Clock monsterDelay;
+
+	int monsterNr;
+
 	//
 
 	list<Tower> towers;
@@ -96,11 +100,17 @@ public:
 
 	void loadTowers(Texture* towerTextures);
 
+	void createMonsters();
+
 	//
 
 	void run();
 
 	void click(Vector2i mousePosition, Mouse::Button button);
+
+	void resetMap();
+
+	void resetGame();
 
 	void drawAll();
 };
