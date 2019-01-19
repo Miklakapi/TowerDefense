@@ -14,6 +14,7 @@ int Monsters::moveNumber = 0;
 Monsters::Monsters() :RectangleShape() {
 	setSize(Vector2f{ 80,80 });
 	setOrigin(Vector2f{ 40,40 });
+	live = false;
 }
 
 void Monsters::loadIntRect(IntRect* rect) {
@@ -27,7 +28,6 @@ void Monsters::setRoad(Type::Direct* direct, int moveNumber) {
 }
 
 void Monsters::setHealth(int health) {
-	live = true;
 	this->health = health;
 	copyHealth = health;
 }
@@ -46,10 +46,7 @@ int Monsters::dmg(int damage) {
 		live = false;
 		return points;
 	}
-	else {
-		live = true;
-		return 0;
-	}
+	else return 0;
 }
 
 bool Monsters::isLive() {
@@ -57,6 +54,7 @@ bool Monsters::isLive() {
 }
 
 void Monsters::reset() {
+	live = true;
 	miniMove = 0;
 	aMove = 0;
 }
