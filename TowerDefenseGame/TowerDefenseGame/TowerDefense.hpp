@@ -3,8 +3,8 @@
 #include <SFML\Window.hpp>
 #include <SFML\System.hpp>
 #include <SFML\Graphics.hpp>
-#include "Menu.hpp"
 #include "Type.hpp"
+#include "Menu.hpp"
 #include "Map.hpp"
 #include "LvReader.hpp"
 #include "Monsters.hpp"
@@ -19,48 +19,65 @@ class TowerDefense {
 
 	RenderWindow* window;
 
-	Sound menuMusic;
+	bool game;
 
-	Sound* lvSounds; 
-
-	bool game; 
-
-	bool music; 
-
-	int round; 
-
-	string* lvFile; 
-
-	Menu menu; 
-
-	Options options; 
-
-	Credits credits; 
-
-	Map map; 
-
-	LvReader lvReader; 
-
-	RangeField rangeField;
+	int round;
 
 	int lvNumbers;
+
+	//
+
+	Menu* menu;
+
+	Credits* credits;
+
+	Options* options;
+
+	Sound* menuMusic;
+
+	bool music;
+
+	//
+	
+	Map* map;
+
+	Sound* lvSounds;
+	
+	//
+
+	LvReader* lvReader;
+
+	string* lvFiles;
+
+	//
+
+	RangeField* rangeField;
+	
+	//
+
+	PointCounter* pointCounter;
+
+	//
 
 	///////////
 
 	void playSound();
 
-
-
-
 public:
 
-	Monsters fireDude; 
+	TowerDefense(RenderWindow* window, int lvNumbers);
+	
+	void loadMenu(Texture* menuTexture, Texture* creditsTexture, Texture* optionsTexture, Field* field, Sound* clickSound, Sound* menuMusic, string optionsFile);
+
+	void loadMap(Texture* mapTextures, IntRect* rect, Sound* lvSounds);
+
+	void loadLvReader(string* lvFiles);
+
+	void loadRangeField();
+
+	void loadPointCounter(Font& font);
 
 	//
-
-	TowerDefense(RenderWindow* window, Texture* menuTextures, Texture* optionsTextures, Texture* lv, Texture* monsterTexture,
-		Field* field, Sound* menuMusic, Sound* lvSounds, string optionsFile, string* lvFile,
-		IntRect* lvRect, IntRect* monsterRect, int lvNumbers);
 
 	void run();
 
