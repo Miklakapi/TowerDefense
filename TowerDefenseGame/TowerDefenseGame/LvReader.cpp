@@ -82,6 +82,9 @@ void LvReader::setFile(string file) {
 		else if (line == "NW") *(direct + a) = Type::Direct::NW;
 		else if (line == "WN") *(direct + a) = Type::Direct::WN;
 	}
+	getline(stream, line);
+	mobNumber = stoi(line);
+
 	stream.close();
 }
 
@@ -90,6 +93,10 @@ Type::Direct* LvReader::getDirect() {
 }
 
 int LvReader::getMoveNumber() {
+	return moveNumber;
+}
+
+int LvReader::getMobNumber() {
 	return moveNumber;
 }
 
