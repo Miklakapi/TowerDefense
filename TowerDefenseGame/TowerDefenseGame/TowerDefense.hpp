@@ -3,6 +3,7 @@
 #include <SFML\Window.hpp>
 #include <SFML\System.hpp>
 #include <SFML\Graphics.hpp>
+#include <list>
 #include "Type.hpp"
 #include "Menu.hpp"
 #include "Map.hpp"
@@ -25,6 +26,8 @@ class TowerDefense {
 
 	int lvNumbers;
 
+	int baseHealth;
+
 	//
 
 	Menu* menu;
@@ -41,7 +44,7 @@ class TowerDefense {
 	
 	Map* map;
 
-	Sound* lvSounds;
+	Sound* lvSounds; //Array
 	
 	//
 
@@ -61,13 +64,13 @@ class TowerDefense {
 
 	Monsters* monsters;
 
-	Texture* monsterTextures;
+	Texture* monsterTextures; //Array
 
 	//
 
-	Tower towers;
+	list<Tower> towers;
 
-	Texture* towerTextures;
+	Texture* towerTextures; //Array
 
 	//
 
