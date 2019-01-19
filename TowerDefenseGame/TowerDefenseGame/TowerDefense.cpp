@@ -69,6 +69,16 @@ void TowerDefense::loadPointCounter(Font& font) {
 	pointCounter = new PointCounter(font);
 }
 
+void TowerDefense::loadMonsters(Texture* monsterTextures, IntRect* rect) {
+	this->monsterTextures = monsterTextures;
+	Monsters monst;
+	monst.loadIntRect(rect);
+}
+
+void TowerDefense::loadTowers(Texture* towerTextures) {
+	this->towerTextures = towerTextures;
+}
+
 //
 
 void TowerDefense::playSound() {
@@ -87,11 +97,11 @@ void TowerDefense::playSound() {
 //Public:
 
 void TowerDefense::run() {
-
+	//
 }
 
 void TowerDefense::click(Vector2i mousePosition, Mouse::Button button) {
-	if (button == Mouse::Button::Left) {
+	if (button == Mouse::Button::Left && game == false) {
 		if (menu->open) {
 			Type::Options opt = menu->click(mousePosition, music);
 			if (opt == Type::Options::Start) {
@@ -141,17 +151,27 @@ void TowerDefense::click(Vector2i mousePosition, Mouse::Button button) {
 			return;
 		}
 	}
+	else if (button == Mouse::Button::Left && game == false) {
+		//
+	}
 	else if (button == Mouse::Button::Right) {
 		//
 	}
 }
 
 void TowerDefense::drawAll() {
-	if (menu->open)window->draw(*menu);
-	else if (options->open)window->draw(*options);
-	else if (credits->open)window->draw(*credits);
-	else if (game) {
+	if (game) {
 		map->drawAll();
-		//if (fireDude->isLive()) window->draw(*fireDude);
+		
+		//
+		
+		if (rangeField->isOn()) window->draw(*rangeField);
+		window->draw(*pointCounter);
 	}
+	else {
+		if (menu->open)window->draw(*menu);
+		else if (options->open)window->draw(*options);
+		else if (credits->open)window->draw(*credits);
+	}
+	
 }
