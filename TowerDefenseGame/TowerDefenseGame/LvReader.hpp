@@ -17,6 +17,8 @@ class LvReader {
 
 	int moveNumber;
 
+	int mobNumber;
+
 	Type::Direct* direct;
 
 public:
@@ -28,6 +30,8 @@ public:
 	Type::Direct* getDirect();
 
 	int getMoveNumber();
+
+	int getMobNumber();
 
 	Vector2f getStartPosition();
 };
