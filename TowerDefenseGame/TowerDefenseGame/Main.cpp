@@ -66,7 +66,7 @@ int main() {
 		monsterTexture.loadFromFile("Img/FireDude.png");
 
 							//Texture Arrays
-		Texture lvTextures[3] = { lv1,lv2,lv3 };
+	Texture lvTextures[3] = { lv1,lv2,lv3 };
 
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
@@ -137,11 +137,13 @@ int main() {
 							//Tower Defense
 
 	TowerDefense game(&app, 3);
-	game.loadMenu(&mainMenu, &creditsMenu, optionsMenu, field, &clickSound, &menuMusic, settingsFile);
-	game.loadMap(lvTextures, mapRect, lvSounds);
-	game.loadLvReader(&lvFile);
-	game.loadRangeField();
-	game.loadPointCounter(font);
+		game.loadMenu(&mainMenu, &creditsMenu, optionsMenu, field, &clickSound, &menuMusic, settingsFile);
+		game.loadMap(lvTextures, mapRect, lvSounds);
+		game.loadLvReader(&lvFile);
+		game.loadRangeField();
+		game.loadPointCounter(font);
+		game.loadMonsters(&monsterTexture, monstersRect);
+		game.loadTowers(&towerTexture);
 
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
