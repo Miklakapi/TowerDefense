@@ -14,7 +14,7 @@ using namespace std;
 TowerDefense::TowerDefense(RenderWindow* window, Texture* menuTextures, Texture* optionsTextures, Texture* lv, Texture* monsterTexture,
 	Field* field, Sound* menuMusic, Sound* lvSounds, string settingsFile, string* lvFile,
 	IntRect* lvRect, IntRect* monsterRect, int lvNumbers)
-	: options(window,settingsFile), map(window,lv,lvRect), lvReader(&map)  {
+	: options(window,settingsFile), map(window,lv,lvRect), lvReader(&map), rangeField(Color::Black)  {
 
 	menu.setTexture(menuTextures);
 	credits.setTexture(menuTextures + 1);
