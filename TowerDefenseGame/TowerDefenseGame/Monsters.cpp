@@ -36,10 +36,20 @@ void Monsters::setSpeed(int speed) {
 	this->speed = speed;
 }
 
-void Monsters::dmg(int damage) {
+void Monsters::setValue(int points) {
+	this->points = points;
+}
+
+int Monsters::dmg(int damage) {
 	health = health - damage;
-	if (health <= 0) live = false;
-	else live = true;
+	if (health <= 0) {
+		live = false;
+		return points;
+	}
+	else {
+		live = true;
+		return 0;
+	}
 }
 
 bool Monsters::isLive() {
@@ -47,8 +57,6 @@ bool Monsters::isLive() {
 }
 
 void Monsters::reset() {
-	live = true;
-	health = copyHealth;
 	miniMove = 0;
 	aMove = 0;
 }
