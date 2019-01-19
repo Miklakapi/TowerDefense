@@ -16,6 +16,8 @@ class Tower : public RectangleShape{
 
 	int damage;
 
+	int cost;
+
 public:
 
 	Tower();
@@ -24,7 +26,11 @@ public:
 
 	void setDamage(int damage);
 
+	void setCost(int cost);
+
 	int getRange();
+
+	int getCost();
 
 	void deviation(Monsters* monster);
 
