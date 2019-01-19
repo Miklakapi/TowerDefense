@@ -58,15 +58,25 @@ int main() {
 		lv3.loadFromFile("Img/lv3.png");
 
 							//Towers
-	Texture towerTexture;
-		towerTexture.loadFromFile("Img/Tower.png");
+	Texture tower1Texture;
+		tower1Texture.loadFromFile("Img/TowerLv1.png");
+	Texture tower2Texture;
+		tower2Texture.loadFromFile("Img/TowerLv2.png");
+	Texture tower3Texture;
+		tower3Texture.loadFromFile("Img/TowerLv3.png");
 
 							//Monsters
-	Texture monsterTexture; 
-		monsterTexture.loadFromFile("Img/FireDude.png");
+	Texture monster1Texture; 
+		monster1Texture.loadFromFile("Img/FireDude.png");
+	Texture monster2Texture;
+		monster2Texture.loadFromFile("Img/FireDude.png");
+	Texture monster3Texture;
+		monster3Texture.loadFromFile("Img/FireDude.png");
 
 							//Texture Arrays
 	Texture lvTextures[3] = { lv1,lv2,lv3 };
+	Texture towerTextures[3] = { tower1Texture, tower2Texture, tower3Texture };
+	Texture monsterTextures[3] = { monster1Texture, monster2Texture, monster3Texture };
 
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
@@ -142,8 +152,8 @@ int main() {
 		game.loadLvReader(&lvFile);
 		game.loadRangeField();
 		game.loadPointCounter(font);
-		game.loadMonsters(&monsterTexture, monstersRect);
-		game.loadTowers(&towerTexture);
+		game.loadMonsters(monsterTextures, monstersRect);
+		game.loadTowers(towerTextures);
 
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
