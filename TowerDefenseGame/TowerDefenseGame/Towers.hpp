@@ -36,5 +36,5 @@ public:
 
 	bool inRange(Monsters* monster);
 
-	int shoot(Monsters* monster);
+	int shoot();
 };
