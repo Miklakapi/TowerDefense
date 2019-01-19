@@ -16,6 +16,7 @@ TowerDefense::TowerDefense(RenderWindow* window, int lvNumbers){
 	game = false;
 	round = 1;
 	baseHealth = 10;
+	monsterNr = 0;
 	this->lvNumbers = lvNumbers;
 }
 
@@ -80,6 +81,18 @@ void TowerDefense::loadTowers(Texture* towerTextures) {
 	this->towerTextures = towerTextures;
 }
 
+void TowerDefense::createMonsters() {
+	monsters = new Monsters[lvReader->getMobNumber()];
+	for (int i = 0; i < lvReader->getMobNumber(); i++) {
+		(monsters + i)->setTexture((monsterTextures + (round - 1)));
+		(monsters + i)->setHealth(100 + 100 * ((10 * round)/100));
+		(monsters + i)->setSpeed(21-round);
+		(monsters + i)->setValue(25);
+		(monsters + i)->setPosition(lvReader->getStartPosition());
+	}
+	monsters->setRoad(lvReader->getDirect(), lvReader->getMoveNumber());
+}
+
 //
 
 void TowerDefense::playSound() {
@@ -98,15 +111,32 @@ void TowerDefense::playSound() {
 //Public:
 
 void TowerDefense::run() {
-	
+	if (!game) return;
+
 	for(list<Tower>::iterator iter = towers.begin(); iter != towers.end(); iter++){
 
 		for (int i = 0; i < lvReader->getMobNumber(); i++) {
-			//(monsters + i)
+			if (iter->inRange(monsters + i) && (monsters+i)->isLive()) {
+				iter->deviation((monsters + i));
+				pointCounter->setPoints(pointCounter->getPoints() + (monsters + i)->dmg(iter->shoot()));
+				break;
+			}
 		}
 
 	}
+
+	if (monsterDelay.getElapsedTime().asSeconds() >= 5 && monsterNr < lvReader->getMobNumber()-1) {
+		monsterDelay.restart();
+		(monsters + monsterNr)->reset();
+		monsterNr++;
+	}
 	
+	for (int i = 0; i < monsterNr; i++) {
+		if ((monsters + i)->moveMonster()) baseHealth--;
+	}
+
+	if (baseHealth <= 0) game = false;
+
 }
 
 void TowerDefense::click(Vector2i mousePosition, Mouse::Button button) {
@@ -116,6 +146,8 @@ void TowerDefense::click(Vector2i mousePosition, Mouse::Button button) {
 			if (opt == Type::Options::Start) {
 				menu->open = false;
 				game = true;
+				round = 1;
+				createMonsters();
 				playSound();
 			}
 			else if (opt == Type::Options::Settings) {
@@ -169,13 +201,36 @@ void TowerDefense::click(Vector2i mousePosition, Mouse::Button button) {
 			map->setContent(position, Type::Content::Tower);
 			Tower tower;
 			tower.setTexture(towerTextures + (round - 1));
-			tower.setPosition(x * 80 + 40, y * 80 + 40);
+			tower.setPosition(float(x * 80 + 40), float(y * 80 + 40));
+			tower.setRange(200);
+			tower.setDamage(10);
 			towers.push_back(tower);
 		}
 	}
 	else if (button == Mouse::Button::Right && game == true) {
-		//
+		int x = int(mousePosition.x / 80);
+		int y = int(mousePosition.y / 80);
+		int position = x + (y * 16);
+		if (map->getElement(position) == Type::Content::Tower) {
+			Vector2f vec{ float(x * 80 + 40), float(y * 80 + 40) };
+			rangeField->set(vec, 200);
+			rangeField->turnOn();
+		}
+		else rangeField->turnOff();
 	}
+}
+
+void TowerDefense::resetGame() {
+	game = false;
+	round = 1;
+	baseHealth = 10;
+	lvReader->setFile(*lvFiles);
+	rangeField->turnOff();
+	pointCounter->setPoints(100);
+	delete[] monsters;
+	monsterNr = 0;
+	towers.clear();
+	playSound();
 }
 
 void TowerDefense::drawAll() {
@@ -187,7 +242,9 @@ void TowerDefense::drawAll() {
 			window->draw(*iter);
 
 		}
-
+		for (int i = 0; i < lvReader->getMobNumber(); i++) {
+			if ((monsters + i)->isLive())window->draw(*(monsters + i));
+		}
 		
 		if (rangeField->isOn()) window->draw(*rangeField);
 		window->draw(*pointCounter);
