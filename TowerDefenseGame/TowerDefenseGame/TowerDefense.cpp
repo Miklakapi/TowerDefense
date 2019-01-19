@@ -15,6 +15,7 @@ TowerDefense::TowerDefense(RenderWindow* window, int lvNumbers){
 	this->window = window;
 	game = false;
 	round = 1;
+	baseHealth = 10;
 	this->lvNumbers = lvNumbers;
 }
 
@@ -97,7 +98,15 @@ void TowerDefense::playSound() {
 //Public:
 
 void TowerDefense::run() {
-	//
+	
+	for(list<Tower>::iterator iter = towers.begin(); iter != towers.end(); iter++){
+
+		for (int i = 0; i < lvReader->getMobNumber(); i++) {
+			//(monsters + i)
+		}
+
+	}
+	
 }
 
 void TowerDefense::click(Vector2i mousePosition, Mouse::Button button) {
@@ -151,10 +160,20 @@ void TowerDefense::click(Vector2i mousePosition, Mouse::Button button) {
 			return;
 		}
 	}
-	else if (button == Mouse::Button::Left && game == false) {
-		//
+	else if (button == Mouse::Button::Left && game == true) {
+		int x = int(mousePosition.x / 80);
+		int y = int(mousePosition.y / 80);
+		int position = x + (y * 16);
+		if (map->getElement(position) == Type::Content::Grass && pointCounter->getPoints() >= 50) {
+			pointCounter->setPoints(pointCounter->getPoints() - 50);
+			map->setContent(position, Type::Content::Tower);
+			Tower tower;
+			tower.setTexture(towerTextures + (round - 1));
+			tower.setPosition(x * 80 + 40, y * 80 + 40);
+			towers.push_back(tower);
+		}
 	}
-	else if (button == Mouse::Button::Right) {
+	else if (button == Mouse::Button::Right && game == true) {
 		//
 	}
 }
@@ -163,7 +182,12 @@ void TowerDefense::drawAll() {
 	if (game) {
 		map->drawAll();
 		
-		//
+		for (list<Tower>::iterator iter = towers.begin(); iter != towers.end(); iter++) {
+
+			window->draw(*iter);
+
+		}
+
 		
 		if (rangeField->isOn()) window->draw(*rangeField);
 		window->draw(*pointCounter);
