@@ -27,7 +27,9 @@ private:
 	int copyHealth;
 	int health;
 
-	int speed;	
+	int speed;
+
+	int points;
 
 public:	
 
@@ -41,7 +43,9 @@ public:
 
 	void setSpeed(int speed);
 
-	void dmg(int damage);
+	void setValue(int points);
+
+	int dmg(int damage);
 
 	bool isLive();
 
