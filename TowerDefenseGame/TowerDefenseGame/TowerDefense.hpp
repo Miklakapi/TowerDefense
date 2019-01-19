@@ -6,37 +6,42 @@
 #include "Menu.hpp"
 #include "Type.hpp"
 #include "Map.hpp"
-#include "Monsters.hpp"
 #include "LvReader.hpp"
+#include "Monsters.hpp"
+#include "Towers.hpp"
+#include "RangeField.hpp"
+#include "PointCounter.hpp"
 
 using namespace std;
 using namespace sf;
 
 class TowerDefense {
 
-	RenderWindow* window; //////
+	RenderWindow* window;
 
-	Sound menuMusic; ///////
+	Sound menuMusic;
 
-	Sound* lvSounds; ///////
+	Sound* lvSounds; 
 
-	bool game; /////////
+	bool game; 
 
-	bool music; ////////
+	bool music; 
 
-	int round; //////////
+	int round; 
 
-	string* lvFile; /////////
+	string* lvFile; 
 
-	Menu menu; ////////
+	Menu menu; 
 
-	Options options; ////////
+	Options options; 
 
-	Credits credits; /////////
+	Credits credits; 
 
-	Map map; ////////
+	Map map; 
 
-	LvReader lvReader; ////////
+	LvReader lvReader; 
+
+	RangeField rangeField;
 
 	int lvNumbers;
 
@@ -49,7 +54,7 @@ class TowerDefense {
 
 public:
 
-	Monsters fireDude; ///////
+	Monsters fireDude; 
 
 	//
 
