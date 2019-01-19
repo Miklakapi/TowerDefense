@@ -2,6 +2,7 @@
 #include <SFML\Window.hpp>
 #include <SFML\System.hpp>
 #include <SFML\Graphics.hpp>
+#include "Monsters.hpp"
 
 using namespace sf;
 
@@ -9,13 +10,25 @@ class Tower : public RectangleShape{
 
 	Clock clock;
 
+	static const double PI;
+
+	int range;
+
+	int damage;
+
 public:
 
 	Tower();
 
-	void deviation(Monsters*monster);
+	void setRange(int range);
 
-	bool ifdmg(Monsters*monster);
+	void setDamage(int damage);
 
-	int shoot(Monsters*monster);
+	int getRange();
+
+	void deviation(Monsters* monster);
+
+	bool inRange(Monsters* monster);
+
+	int shoot(Monsters* monster);
 };
