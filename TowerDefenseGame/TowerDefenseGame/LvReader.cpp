@@ -97,7 +97,7 @@ int LvReader::getMoveNumber() {
 }
 
 int LvReader::getMobNumber() {
-	return moveNumber;
+	return mobNumber;
 }
 
 Vector2f LvReader::getStartPosition() {
