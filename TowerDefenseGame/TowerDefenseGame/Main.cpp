@@ -96,14 +96,14 @@ int main() {
 
 	Sound menuMusic;
 		menuMusic.setBuffer(menuMusicBuffer);
-		menuMusic.setVolume(10);
+		menuMusic.setVolume(8);
 
 							//Game Musics
 	SoundBuffer game1MusicBuffer;
 		game1MusicBuffer.loadFromFile("Sound/battle1.ogg");
 	Sound game1Music;
 		game1Music.setBuffer(game1MusicBuffer);
-		game1Music.setVolume(100);
+		game1Music.setVolume(20);
 
 	SoundBuffer game2MusicBuffer;
 		game2MusicBuffer.loadFromFile("Sound/battle2.ogg");
@@ -172,9 +172,7 @@ int main() {
 
 			if (event.type == Event::Closed) app.close();
 
-			if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape) {
-				//
-			}
+			if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape) game.resetGame();
 			
 			if (event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left) {
 				Vector2i mousePosition = Mouse::getPosition(app);
@@ -185,6 +183,8 @@ int main() {
 				Vector2i mousePosition = Mouse::getPosition(app);
 				game.click(mousePosition, Mouse::Right);
 			}
+
+			//if (event.type == Event::KeyPressed && event.key.code == Keyboard::Space) game.nextLV();
 
 		}
 
