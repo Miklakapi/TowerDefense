@@ -7,6 +7,7 @@
 #include "Map.hpp"
 #include "LvReader.hpp"
 #include "TowerDefense.hpp"
+#include <iostream>
 
 using namespace sf;
 using namespace std;
@@ -14,14 +15,23 @@ using namespace std;
 TowerDefense::TowerDefense(RenderWindow* window, int lvNumbers){
 	this->window = window;
 	game = false;
+	information = false;
 	round = 1;
 	baseHealth = 10;
 	monsterNr = 0;
 	this->lvNumbers = lvNumbers;
+
+	infText.setPosition(520, 250);
+	infText.setLetterSpacing(5);
+	infText.setCharacterSize(100);
+	infText.setStyle(Text::Bold);
+	infText.setFillColor(Color::Red);
+	infText.setString("Lose");
 }
 
 void TowerDefense::loadMenu(Texture* menuTexture, Texture* creditsTexture, Texture* optionsTextures, Field* field, Sound* clickSound, Sound* menuMusic, string optionsFile) {
 	this->menuMusic = menuMusic;
+	this->menuMusic->setLoop(true);
 	menu = new Menu;
 	menu->loadField(*(field), *(field + 1), *(field + 2), *(field + 3));
 		menu->loadSound(clickSound);
@@ -53,6 +63,9 @@ void TowerDefense::loadMenu(Texture* menuTexture, Texture* creditsTexture, Textu
 
 void TowerDefense::loadMap(Texture* mapTextures, IntRect* rect, Sound* lvSounds) {
 	this->lvSounds = lvSounds;
+	for (int i = 0; i < lvNumbers; i++) {
+		(this->lvSounds + i)->setLoop(true);
+	}
 	map = new Map(window, mapTextures, rect);
 }
 
@@ -69,6 +82,7 @@ void TowerDefense::loadRangeField() {
 
 void TowerDefense::loadPointCounter(Font& font) {
 	pointCounter = new PointCounter(font);
+	infText.setFont(font);
 }
 
 void TowerDefense::loadMonsters(Texture* monsterTextures, IntRect* rect) {
@@ -77,8 +91,8 @@ void TowerDefense::loadMonsters(Texture* monsterTextures, IntRect* rect) {
 	monst.loadIntRect(rect);
 }
 
-void TowerDefense::loadTowers(Texture* towerTextures) {
-	this->towerTextures = towerTextures;
+void TowerDefense::loadTowers(Texture* towerTexture) {
+	this->towerTexture = towerTexture;
 }
 
 void TowerDefense::createMonsters() {
@@ -91,6 +105,7 @@ void TowerDefense::createMonsters() {
 		(monsters + i)->setPosition(lvReader->getStartPosition());
 	}
 	monsters->setRoad(lvReader->getDirect(), lvReader->getMoveNumber());
+	live = lvReader->getMobNumber();
 }
 
 //
@@ -103,7 +118,10 @@ void TowerDefense::playSound() {
 	}
 	else {
 		menuMusic->stop();
-		if (music) (lvSounds + (round - 1))->play();
+		if (music) {
+			if(round > 1) (lvSounds + (round - 2))->stop();
+			(lvSounds + (round - 1))->play();
+		}
 		else (lvSounds + (round - 1))->stop();
 	}
 }
@@ -111,21 +129,26 @@ void TowerDefense::playSound() {
 //Public:
 
 void TowerDefense::run() {
-	if (!game) return;
+	if ((!game) || information) return;
 
 	for(list<Tower>::iterator iter = towers.begin(); iter != towers.end(); iter++){
 
 		for (int i = 0; i < lvReader->getMobNumber(); i++) {
-			if (iter->inRange(monsters + i) && (monsters+i)->isLive()) {
+			if (iter->inRange(monsters + i) && (monsters + i)->isLive()) {
 				iter->deviation((monsters + i));
 				pointCounter->setPoints(pointCounter->getPoints() + (monsters + i)->dmg(iter->shoot()));
+				if (!(monsters + i)->isLive()) live--;
 				break;
 			}
 		}
-
+	}
+	
+	if (live <= 0) {
+		infText.setString("WIN");
+		information = true;
 	}
 
-	if (monsterDelay.getElapsedTime().asSeconds() >= 5 && monsterNr < lvReader->getMobNumber()-1) {
+	if (monsterDelay.getElapsedTime().asSeconds() >= 3 && monsterNr < lvReader->getMobNumber()) {
 		monsterDelay.restart();
 		(monsters + monsterNr)->reset();
 		monsterNr++;
@@ -135,11 +158,15 @@ void TowerDefense::run() {
 		if ((monsters + i)->moveMonster()) baseHealth--;
 	}
 
-	if (baseHealth <= 0) game = false;
+	if (baseHealth <= 0) {
+		infText.setString("LOSE");
+		information = true;
+	}
 
 }
 
 void TowerDefense::click(Vector2i mousePosition, Mouse::Button button) {
+	if (information) return;
 	if (button == Mouse::Button::Left && game == false) {
 		if (menu->open) {
 			Type::Options opt = menu->click(mousePosition, music);
@@ -200,7 +227,7 @@ void TowerDefense::click(Vector2i mousePosition, Mouse::Button button) {
 			pointCounter->setPoints(pointCounter->getPoints() - 50);
 			map->setContent(position, Type::Content::Tower);
 			Tower tower;
-			tower.setTexture(towerTextures + (round - 1));
+			tower.setTexture(towerTexture);
 			tower.setPosition(float(x * 80 + 40), float(y * 80 + 40));
 			tower.setRange(200);
 			tower.setDamage(10);
@@ -220,10 +247,35 @@ void TowerDefense::click(Vector2i mousePosition, Mouse::Button button) {
 	}
 }
 
+void TowerDefense::nextLV() {
+	if (!game) return;
+	information = false;
+	round++;
+	if (round > lvNumbers){
+		(lvSounds + (lvNumbers-1))->stop();
+		resetGame();
+	}
+	else {
+		map->setLv(round);
+		lvReader->setFile(*(lvFiles));//lvReader->setFile(*(lvFiles + (round - 1))); 
+		delete[] monsters;
+		monsterNr = 0;
+		createMonsters();
+		baseHealth = 10;
+		rangeField->turnOff();
+		pointCounter->setPoints(100);
+		towers.clear();
+		playSound();
+	}
+}
+
 void TowerDefense::resetGame() {
+	information = false;
 	game = false;
+	menu->open = true;
 	round = 1;
 	baseHealth = 10;
+	map->setLv(1);
 	lvReader->setFile(*lvFiles);
 	rangeField->turnOff();
 	pointCounter->setPoints(100);
@@ -235,19 +287,30 @@ void TowerDefense::resetGame() {
 
 void TowerDefense::drawAll() {
 	if (game) {
-		map->drawAll();
-		
-		for (list<Tower>::iterator iter = towers.begin(); iter != towers.end(); iter++) {
 
-			window->draw(*iter);
+		if (!information) {
+			map->drawAll();
 
+			for (list<Tower>::iterator iter = towers.begin(); iter != towers.end(); iter++) {
+
+				window->draw(*iter);
+
+			}
+			for (int i = 0; i < lvReader->getMobNumber(); i++) {
+				if ((monsters + i)->isLive())window->draw(*(monsters + i));
+			}
+
+			if (rangeField->isOn()) window->draw(*rangeField);
+			window->draw(*pointCounter);
 		}
-		for (int i = 0; i < lvReader->getMobNumber(); i++) {
-			if ((monsters + i)->isLive())window->draw(*(monsters + i));
+		else {
+			window->draw(infText);
+			window->display();
+			sleep(seconds(3));
+			if (infText.getString() == "LOSE") resetGame();
+			else if (infText.getString() == "WIN" && round > lvNumbers) resetGame();
+			else nextLV();
 		}
-		
-		if (rangeField->isOn()) window->draw(*rangeField);
-		window->draw(*pointCounter);
 	}
 	else {
 		if (menu->open)window->draw(*menu);
