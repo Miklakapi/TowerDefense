@@ -22,6 +22,8 @@ class TowerDefense {
 
 	bool game;
 
+	bool information;
+
 	int round;
 
 	int lvNumbers;
@@ -70,13 +72,17 @@ class TowerDefense {
 
 	int monsterNr;
 
+	int live;
+
 	//
 
 	list<Tower> towers;
 
-	Texture* towerTextures; //Array
+	Texture* towerTexture;
 
 	//
+
+	Text infText;
 
 	///////////
 
@@ -98,7 +104,7 @@ public:
 
 	void loadMonsters(Texture* monsterTextures, IntRect* rect);
 
-	void loadTowers(Texture* towerTextures);
+	void loadTowers(Texture* towerTexture);
 
 	void createMonsters();
 
@@ -108,7 +114,7 @@ public:
 
 	void click(Vector2i mousePosition, Mouse::Button button);
 
-	void resetMap();
+	void nextLV();
 
 	void resetGame();
 
