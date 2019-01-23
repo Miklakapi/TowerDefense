@@ -11,7 +11,10 @@ using namespace std;
 int main() {
 
 	string settingsFile = "settings.txt";
-	string lvFile = "lv1.txt";
+	string lv1File = "lv1.txt";
+	string lv2File = "lv2.txt";
+	string lv3File = "lv3.txt";
+	string lvFile[3] = { lv1File, lv2File, lv3File };
 
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
@@ -58,24 +61,21 @@ int main() {
 		lv3.loadFromFile("Img/lv3.png");
 
 							//Towers
-	Texture tower1Texture;
-		tower1Texture.loadFromFile("Img/TowerLv1.png");
-	Texture tower2Texture;
-		tower2Texture.loadFromFile("Img/TowerLv2.png");
-	Texture tower3Texture;
-		tower3Texture.loadFromFile("Img/TowerLv3.png");
+	Texture tower1Texture, tower1fireTexture;
+		tower1Texture.loadFromFile("Img/Tower1.png");
+		tower1fireTexture.loadFromFile("Img/Tower1fire.png");
 
 							//Monsters
 	Texture monster1Texture; 
-		monster1Texture.loadFromFile("Img/FireDude.png");
+		monster1Texture.loadFromFile("Img/Bush.png");
 	Texture monster2Texture;
-		monster2Texture.loadFromFile("Img/FireDude.png");
+		monster2Texture.loadFromFile("Img/Cactus.png");
 	Texture monster3Texture;
 		monster3Texture.loadFromFile("Img/FireDude.png");
 
 							//Texture Arrays
 	Texture lvTextures[3] = { lv1,lv2,lv3 };
-	Texture towerTextures[3] = { tower1Texture, tower2Texture, tower3Texture };
+	Texture towerTextures[2] = { tower1Texture, tower1fireTexture};
 	Texture monsterTextures[3] = { monster1Texture, monster2Texture, monster3Texture };
 
 /////////////////////////////////////////////////////////////////////////////////////
@@ -117,6 +117,13 @@ int main() {
 		game3Music.setBuffer(game3MusicBuffer);
 		game3Music.setVolume(20);
 
+							//Shoot sound
+	SoundBuffer shootBuffer;
+		shootBuffer.loadFromFile("Sound/shoot.ogg");
+	Sound shoot;
+		shoot.setBuffer(shootBuffer);
+		shoot.setVolume(7);
+
 							//Music Arrays
 	Sound lvSounds[3] = { game1Music, game2Music, game3Music };
 
@@ -135,8 +142,8 @@ int main() {
 							//IntRect
 
 							//Map Rect
-	IntRect mapRect[8]{ IntRect{1,1,3,3}, IntRect{80,80,80,80}, IntRect{0,80,80,80}, IntRect{80,0,80,80},
-		IntRect{0,160,80,80}, IntRect{0,0,80,80}, IntRect{160,0,80,80}, IntRect{80,160,80,80}, };
+	IntRect mapRect[9]{ IntRect{1,1,3,3}, IntRect{80,80,80,80}, IntRect{0,80,80,80}, IntRect{80,0,80,80},
+		IntRect{0,160,80,80}, IntRect{0,0,80,80}, IntRect{160,0,80,80}, IntRect{80,160,80,80},IntRect{160,160,80,80} };
 							
 							//Monster Rect
 	IntRect monstersRect[4]{ IntRect{0,0,100,100}, IntRect{100,0,100,100}, IntRect{0,100,100,100}, IntRect{100,100,100,100}, };
@@ -149,17 +156,15 @@ int main() {
 	TowerDefense game(&app, 3);
 		game.loadMenu(&mainMenu, &creditsMenu, optionsMenu, field, &clickSound, &menuMusic, settingsFile);
 		game.loadMap(lvTextures, mapRect, lvSounds);
-		game.loadLvReader(&lvFile);
+		game.loadLvReader(lvFile);
 		game.loadRangeField();
 		game.loadPointCounter(font);
 		game.loadMonsters(monsterTextures, monstersRect);
-		game.loadTowers(towerTextures);
+		game.loadTowers(towerTextures, &shoot);
 
 
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
-
-
 
 
 	//Main loop
@@ -184,7 +189,7 @@ int main() {
 				game.click(mousePosition, Mouse::Right);
 			}
 
-			//if (event.type == Event::KeyPressed && event.key.code == Keyboard::Space) game.nextLV();
+			if (event.type == Event::KeyPressed && event.key.code == Keyboard::Space) game.nextLV();
 
 		}
 
