@@ -7,7 +7,6 @@
 #include "Map.hpp"
 #include "LvReader.hpp"
 #include "TowerDefense.hpp"
-#include <iostream>
 
 using namespace sf;
 using namespace std;
@@ -91,17 +90,25 @@ void TowerDefense::loadMonsters(Texture* monsterTextures, IntRect* rect) {
 	monst.loadIntRect(rect);
 }
 
-void TowerDefense::loadTowers(Texture* towerTexture) {
+void TowerDefense::loadTowers(Texture* towerTexture, Sound* shootSound) {
 	this->towerTexture = towerTexture;
+	this->shootSound = shootSound;
+	Tower tower;
+	tower.loadTextures(towerTexture);
 }
 
 void TowerDefense::createMonsters() {
 	monsters = new Monsters[lvReader->getMobNumber()];
+	Vector2f vec;
+	if (round == 1) vec = { 40,60 };
+	else if (round == 2) vec = { 40,60 };
+	else if (round == 3) vec = { 40,40 };
 	for (int i = 0; i < lvReader->getMobNumber(); i++) {
+		(monsters + i)->setOrigin(vec);
 		(monsters + i)->setTexture((monsterTextures + (round - 1)));
-		(monsters + i)->setHealth(100 + 100 * ((10 * round)/100));
-		(monsters + i)->setSpeed(21-round);
-		(monsters + i)->setValue(25);
+		(monsters + i)->setHealth(100 + 10 * round);
+		(monsters + i)->setSpeed(20 - 2 * round);
+		(monsters + i)->setValue(20);
 		(monsters + i)->setPosition(lvReader->getStartPosition());
 	}
 	monsters->setRoad(lvReader->getDirect(), lvReader->getMoveNumber());
@@ -140,6 +147,7 @@ void TowerDefense::run() {
 				if (!(monsters + i)->isLive()) live--;
 				break;
 			}
+			else if (iter->getFire()) iter->shoot();
 		}
 	}
 	
@@ -148,14 +156,17 @@ void TowerDefense::run() {
 		information = true;
 	}
 
-	if (monsterDelay.getElapsedTime().asSeconds() >= 3 && monsterNr < lvReader->getMobNumber()) {
+	if (monsterDelay.getElapsedTime().asSeconds() >= 3-(round / 10) && monsterNr < lvReader->getMobNumber()) {
 		monsterDelay.restart();
 		(monsters + monsterNr)->reset();
 		monsterNr++;
 	}
 	
 	for (int i = 0; i < monsterNr; i++) {
-		if ((monsters + i)->moveMonster()) baseHealth--;
+		if ((monsters + i)->moveMonster()) {
+			baseHealth--;
+			live--;
+		}
 	}
 
 	if (baseHealth <= 0) {
@@ -228,9 +239,10 @@ void TowerDefense::click(Vector2i mousePosition, Mouse::Button button) {
 			map->setContent(position, Type::Content::Tower);
 			Tower tower;
 			tower.setTexture(towerTexture);
+			tower.loadSound(shootSound);
 			tower.setPosition(float(x * 80 + 40), float(y * 80 + 40));
 			tower.setRange(200);
-			tower.setDamage(10);
+			tower.setDamage(15);
 			towers.push_back(tower);
 		}
 	}
@@ -257,7 +269,7 @@ void TowerDefense::nextLV() {
 	}
 	else {
 		map->setLv(round);
-		lvReader->setFile(*(lvFiles));//lvReader->setFile(*(lvFiles + (round - 1))); 
+		lvReader->setFile(*(lvFiles + (round - 1))); 
 		delete[] monsters;
 		monsterNr = 0;
 		createMonsters();
@@ -282,6 +294,7 @@ void TowerDefense::resetGame() {
 	delete[] monsters;
 	monsterNr = 0;
 	towers.clear();
+	for (int i = 0; i < lvNumbers; i++) (lvSounds + i)->stop();
 	playSound();
 }
 
