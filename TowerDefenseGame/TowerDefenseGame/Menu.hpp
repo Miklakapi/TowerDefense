@@ -1,0 +1,97 @@
+#pragma once
+#include <SFML\Audio.hpp>
+#include <SFML\Window.hpp>
+#include <SFML\System.hpp>
+#include <SFML\Graphics.hpp>
+#include "Type.hpp"
+
+using namespace sf;
+using namespace std;
+
+/////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+
+struct Field {
+
+	Vector2i leftPosition;
+	Vector2i rightPosition;
+
+	Field();
+	Field(Vector2i left, Vector2i right);
+};
+
+/////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+
+class MenuPlan :public RectangleShape {
+
+protected:
+
+	Field field1;	Field field2;
+
+	Field field3;	Field field4;
+
+	Sound* clickSound;
+
+public:
+	
+	bool open;
+
+	//
+
+	MenuPlan();
+
+	void loadField(Field field1, Field field2, Field field3, Field field4);
+
+	void loadSound(Sound* clickSound);
+
+	virtual Type::Options click(Vector2i mousePosition, bool playSound);
+};
+
+/////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+
+class Menu :public MenuPlan{
+
+public:
+
+	Menu();
+
+	Type::Options click(Vector2i mousePosition, bool playSound);
+};
+
+/////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+
+class Options :public MenuPlan {
+
+	RenderWindow* window;
+
+	string file;
+
+	Texture* texture;
+
+public:
+
+	int settings;
+
+	Options(RenderWindow* window, string file);
+
+	void loadTextures(Texture* texture);
+
+	Type::Options click(Vector2i mousePosition, bool playSound);
+
+};
+
+/////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+
+class Credits :public MenuPlan {
+
+public:
+
+	Credits();
+
+	Type::Options click(Vector2i mousePosition, bool playSound);
+
+};
