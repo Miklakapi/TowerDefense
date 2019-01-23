@@ -1,12 +1,6 @@
 #pragma once
 
 namespace Type {
-	
-	enum Mob {
-		Empty,
-		Empty2,
-		FireDude
-	};
 
 	enum Content {
 		Grass,
@@ -19,12 +13,6 @@ namespace Type {
 		RoadWN,
 		Base,
 		Tower
-	};
-
-	enum Weapon {
-		tower1,
-		tower2,
-		tower3
 	};
 
 	enum Direct {
