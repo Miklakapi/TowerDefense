@@ -1,17 +1,26 @@
-#include <SFML\Window.hpp>
-#include <SFML\System.hpp>
-#include <SFML\Graphics.hpp>
-#include <math.h>
 #include "Monsters.hpp"
 #include "Towers.hpp"
 
 using namespace sf;
 
-const double Tower::PI = 3.14159265;
+const double PI = 3.14159265;
+
+Texture* Tower::textures = NULL;
+
+bool oneSec = true;
 
 Tower::Tower() : RectangleShape() {
 	setOrigin(Vector2f(40, 40));
 	setSize(Vector2f(80, 80));
+	fire = false;
+}
+
+void Tower::loadSound(Sound* sound) {
+	this->sound = *sound;
+}
+
+void Tower::loadTextures(Texture* textures) {
+	this->textures = textures;
 }
 
 void Tower::setRange(int range) {
@@ -34,6 +43,10 @@ int Tower::getCost() {
 	return cost;
 }
 
+bool Tower::getFire() {
+	return fire;
+}
+
 void Tower::deviation(Monsters* monster) {
 	Vector2f vec = monster->getPosition() - getPosition();
 	float grade = float(atan2(vec.y, vec.x) * 180 / PI);
@@ -47,7 +60,14 @@ bool Tower::inRange(Monsters* monster) {
 }
 
 int Tower::shoot() {
-	if (clock.getElapsedTime().asSeconds() < 0.33) return 0;
+	if (clock.getElapsedTime().asSeconds() > 0.20) {
+		setTexture(textures);
+		fire = false;
+	}
+	if (clock.getElapsedTime().asSeconds() < 0.50) return 0;
+	setTexture(textures + 1);
+	fire = true;
 	clock.restart();
-	return int(damage/3);
+	sound.play();
+	return int(damage/2);
 }
