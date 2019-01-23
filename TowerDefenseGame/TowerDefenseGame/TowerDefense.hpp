@@ -80,6 +80,8 @@ class TowerDefense {
 
 	Texture* towerTexture;
 
+	Sound* shootSound;
+
 	//
 
 	Text infText;
@@ -104,7 +106,7 @@ public:
 
 	void loadMonsters(Texture* monsterTextures, IntRect* rect);
 
-	void loadTowers(Texture* towerTexture);
+	void loadTowers(Texture* towerTexture, Sound* shootSound);
 
 	void createMonsters();
 
