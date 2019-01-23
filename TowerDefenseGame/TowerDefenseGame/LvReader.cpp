@@ -52,6 +52,9 @@ void LvReader::setFile(string file) {
 			case 't':
 				content = Type::Content::RoadSW;
 				break;
+			case 'B':
+				content = Type::Content::Base;
+				break;
 			case 'S':
 				content = Type::Content::RoadEW;
 				startPosition = Vector2f{ float((((x + 1) * 80) + 40)),float(((y * 80) + 40)) };
