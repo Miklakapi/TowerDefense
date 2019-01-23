@@ -2,15 +2,18 @@
 #include <SFML\Window.hpp>
 #include <SFML\System.hpp>
 #include <SFML\Graphics.hpp>
+#include <math.h>
 #include "Monsters.hpp"
 
 using namespace sf;
 
 class Tower : public RectangleShape{
 
+	static Texture* textures;
+
 	Clock clock;
 
-	static const double PI;
+	Sound sound;
 
 	int range;
 
@@ -18,9 +21,15 @@ class Tower : public RectangleShape{
 
 	int cost;
 
+	bool fire;
+
 public:
 
 	Tower();
+
+	void loadSound(Sound* sound);
+
+	void loadTextures(Texture* texture);
 
 	void setRange(int range);
 
@@ -31,6 +40,8 @@ public:
 	int getRange();
 
 	int getCost();
+
+	bool getFire();
 
 	void deviation(Monsters* monster);
 
