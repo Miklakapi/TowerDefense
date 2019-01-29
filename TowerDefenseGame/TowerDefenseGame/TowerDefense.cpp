@@ -15,6 +15,7 @@ TowerDefense::TowerDefense(RenderWindow* window, int lvNumbers){
 	this->window = window;
 	game = false;
 	information = false;
+	infReset = true;
 	round = 1;
 	baseHealth = 10;
 	monsterNr = 0;
@@ -90,9 +91,12 @@ void TowerDefense::loadMonsters(Texture* monsterTextures, IntRect* rect) {
 	monst.loadIntRect(rect);
 }
 
-void TowerDefense::loadTowers(Texture* towerTexture, Sound* shootSound) {
+void TowerDefense::loadTowers(Texture* towerTexture, Sound shotSound) {
 	this->towerTexture = towerTexture;
-	this->shootSound = shootSound;
+	this->shotSound = new Sound[5];
+	for (int i = 0; i < 5; i++) {
+		*(this->shotSound + i) = shotSound;
+	}
 	Tower tower;
 	tower.loadTextures(towerTexture);
 }
@@ -137,18 +141,22 @@ void TowerDefense::playSound() {
 
 void TowerDefense::run() {
 	if ((!game) || information) return;
-
+	nrShot = 0;
 	for(list<Tower>::iterator iter = towers.begin(); iter != towers.end(); iter++){
-
+		
 		for (int i = 0; i < lvReader->getMobNumber(); i++) {
 			if (iter->inRange(monsters + i) && (monsters + i)->isLive()) {
 				iter->deviation((monsters + i));
-				pointCounter->setPoints(pointCounter->getPoints() + (monsters + i)->dmg(iter->shoot()));
+				pointCounter->setPoints(pointCounter->getPoints() + (monsters + i)->dmg(iter->shot()));
+				if (nrShot < 5 && iter->getFire() && music) {
+					(shotSound + nrShot)->play();
+					nrShot++;
+				}
 				if (!(monsters + i)->isLive()) live--;
 				break;
 			}
-			else if (iter->getFire()) iter->shoot();
-		}
+			else if (iter->getAnimation()) iter->shot();
+		}	
 	}
 	
 	if (live <= 0) {
@@ -239,7 +247,7 @@ void TowerDefense::click(Vector2i mousePosition, Mouse::Button button) {
 			map->setContent(position, Type::Content::Tower);
 			Tower tower;
 			tower.setTexture(towerTexture);
-			tower.loadSound(shootSound);
+			//tower.loadSound(shotSound);
 			tower.setPosition(float(x * 80 + 40), float(y * 80 + 40));
 			tower.setRange(200);
 			tower.setDamage(15);
@@ -317,12 +325,18 @@ void TowerDefense::drawAll() {
 			window->draw(*pointCounter);
 		}
 		else {
+			if (infReset) {
+				infoClock.restart();
+				infReset = false;
+			}
 			window->draw(infText);
-			window->display();
-			sleep(seconds(3));
-			if (infText.getString() == "LOSE") resetGame();
-			else if (infText.getString() == "WIN" && round > lvNumbers) resetGame();
-			else nextLV();
+			
+			if (infoClock.getElapsedTime().asSeconds() >= 3) {
+				infReset = true;
+				if (infText.getString() == "LOSE") resetGame();
+				else if (infText.getString() == "WIN" && round > lvNumbers) resetGame();
+				else nextLV();
+			}
 		}
 	}
 	else {
