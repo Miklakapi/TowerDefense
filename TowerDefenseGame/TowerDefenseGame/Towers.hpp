@@ -13,8 +13,6 @@ class Tower : public RectangleShape{
 
 	Clock clock;
 
-	Sound sound;
-
 	int range;
 
 	int damage;
@@ -23,11 +21,11 @@ class Tower : public RectangleShape{
 
 	bool fire;
 
+	bool animation;
+
 public:
 
 	Tower();
-
-	void loadSound(Sound* sound);
 
 	void loadTextures(Texture* texture);
 
@@ -43,9 +41,11 @@ public:
 
 	bool getFire();
 
+	bool getAnimation();
+
 	void deviation(Monsters* monster);
 
 	bool inRange(Monsters* monster);
 
-	int shoot();
+	int shot();
 };
