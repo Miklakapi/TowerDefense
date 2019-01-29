@@ -24,6 +24,8 @@ class TowerDefense {
 
 	bool information;
 
+	bool infReset;
+
 	int round;
 
 	int lvNumbers;
@@ -80,11 +82,17 @@ class TowerDefense {
 
 	Texture* towerTexture;
 
-	Sound* shootSound;
+	Sound* shotSound;
+
+	Clock shotSoundClock;
+
+	int nrShot;
 
 	//
 
 	Text infText;
+
+	Clock infoClock;
 
 	///////////
 
@@ -106,7 +114,7 @@ public:
 
 	void loadMonsters(Texture* monsterTextures, IntRect* rect);
 
-	void loadTowers(Texture* towerTexture, Sound* shootSound);
+	void loadTowers(Texture* towerTexture, Sound shotSound);
 
 	void createMonsters();
 
