@@ -42,3 +42,5 @@
 *.filters
 *.log
 *.vcxproj
+*.ipdb
+*.iobj
