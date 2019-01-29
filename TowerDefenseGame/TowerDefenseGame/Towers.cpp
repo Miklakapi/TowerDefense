@@ -13,10 +13,7 @@ Tower::Tower() : RectangleShape() {
 	setOrigin(Vector2f(40, 40));
 	setSize(Vector2f(80, 80));
 	fire = false;
-}
-
-void Tower::loadSound(Sound* sound) {
-	this->sound = *sound;
+	animation = false;
 }
 
 void Tower::loadTextures(Texture* textures) {
@@ -47,6 +44,10 @@ bool Tower::getFire() {
 	return fire;
 }
 
+bool Tower::getAnimation() {
+	return animation;
+}
+
 void Tower::deviation(Monsters* monster) {
 	Vector2f vec = monster->getPosition() - getPosition();
 	float grade = float(atan2(vec.y, vec.x) * 180 / PI);
@@ -59,15 +60,18 @@ bool Tower::inRange(Monsters* monster) {
 	else return false;
 }
 
-int Tower::shoot() {
+int Tower::shot() {
 	if (clock.getElapsedTime().asSeconds() > 0.20) {
 		setTexture(textures);
-		fire = false;
+		animation = false;
 	}
-	if (clock.getElapsedTime().asSeconds() < 0.50) return 0;
+	if (clock.getElapsedTime().asSeconds() < 1) {
+		fire = false;
+		return 0;
+	}
 	setTexture(textures + 1);
 	fire = true;
+	animation = true;
 	clock.restart();
-	sound.play();
-	return int(damage/2);
+	return damage;
 }
