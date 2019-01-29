@@ -9,7 +9,9 @@ using namespace sf;
 using namespace std;
 
 int main() {
-
+/////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+							//File
 	string settingsFile = "settings.txt";
 	string lv1File = "lv1.txt";
 	string lv2File = "lv2.txt";
@@ -24,7 +26,7 @@ int main() {
 
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
-									//Fonts
+							//Fonts
 
 	Font font;
 		font.loadFromFile("Fonts/arial.ttf");
@@ -117,12 +119,12 @@ int main() {
 		game3Music.setBuffer(game3MusicBuffer);
 		game3Music.setVolume(20);
 
-							//Shoot sound
-	SoundBuffer shootBuffer;
-		shootBuffer.loadFromFile("Sound/shoot.ogg");
-	Sound shoot;
-		shoot.setBuffer(shootBuffer);
-		shoot.setVolume(7);
+							//Shot sound
+	SoundBuffer shotBuffer;
+		shotBuffer.loadFromFile("Sound/shot.ogg");
+	Sound shot;
+		shot.setBuffer(shotBuffer);
+		shot.setVolume(7);
 
 							//Music Arrays
 	Sound lvSounds[3] = { game1Music, game2Music, game3Music };
@@ -160,7 +162,7 @@ int main() {
 		game.loadRangeField();
 		game.loadPointCounter(font);
 		game.loadMonsters(monsterTextures, monstersRect);
-		game.loadTowers(towerTextures, &shoot);
+		game.loadTowers(towerTextures, shot);
 
 
 /////////////////////////////////////////////////////////////////////////////////////
@@ -189,7 +191,7 @@ int main() {
 				game.click(mousePosition, Mouse::Right);
 			}
 
-			if (event.type == Event::KeyPressed && event.key.code == Keyboard::Space) game.nextLV();
+			//Skip Level if (event.type == Event::KeyPressed && event.key.code == Keyboard::Space) game.nextLV();
 
 		}
 
