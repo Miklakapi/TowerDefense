@@ -11,7 +11,7 @@
 
 ## General info
 This is a tower defense game about defending the tower with the help of turrets.
-![alt text](https://github.com/Miklakapi/PathFinder/blob/master/tower_defense.png)
+![alt text](https://github.com/Miklakapi/TowerDefense/blob/master/tower_defense.png)
 
 ## Technologies
 Project is created with:
